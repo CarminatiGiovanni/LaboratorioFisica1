@@ -17,9 +17,6 @@ sigma = np.std(data)
 media = round(np.mean(data),2)
 
 v = np.power((data - media),2)
-print(len(data))
-dev = np.sqrt(np.power((data - media),2).sum()/len(data))
-print(dev)
 
 VALORE = "{0:.2f} ± {1:.2f}".format(media,sigma)
 
