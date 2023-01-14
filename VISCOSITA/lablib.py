@@ -21,7 +21,7 @@ def counter_centered_with_ranges(dati: list, sigma: float) -> dict[float,int]:
     media_ = round(media_,2)
     ciffre_significative = len(str(sigma)) - str(sigma).find('.') - 1
     correzione_decimale = 5 * pow(10, - (ciffre_significative + 1)) # aggiungo una ciffra significativa per non avere valori a metà tra due intervalli
-    x_values = np.arange(min_ +sigma/2 - correzione_decimale, max_ + sigma/2, sigma)
+    x_values = np.arange(min_ + 0.01 - correzione_decimale, max_ + sigma/2, sigma)
 
     count = dict()
     for x in x_values:
