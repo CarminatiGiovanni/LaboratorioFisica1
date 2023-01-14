@@ -13,8 +13,9 @@ fr = pd.read_csv('r=3mm N=100 d=10cm.csv') #fileread
 data = np.array(fr['misura r=3mm d = 10cm']) #legge colonna '...'
 
 sigma = np.std(data)
-print(sigma)
 media = round(np.mean(data),2)
+
+VALORE = "{0:.2f} ± {1:.2f}".format(media,sigma)
 
 spacing = np.arange(min(data),max(data), sigma/2)
 plt.hist(data, bins=spacing, density=True, label= 'data', color="#89c4ff")
@@ -27,6 +28,6 @@ plt.ylabel("Densità di frequenza")
 plt.xlabel("$t_{caduta}$ (s)")
 
 plt.legend()
-plt.title("Misurazione sfera in caduta nella glicerina")
+plt.title("Misurazione sfera in caduta nella glicerina\n$\\bf{t_{caduta} = " + str(VALORE) + " s}$")
 plt.show()
 
