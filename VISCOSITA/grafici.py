@@ -26,12 +26,14 @@ for item in counter:
     valore.append(item)
     ripetizioni.append(counter[item])
 
-y_indexes = np.arange(len(valore))
+x_indexes = np.arange(len(valore))
 
-plt.barh(y_indexes,ripetizioni) # disegna l'istogramma
+plt.bar(x_indexes,ripetizioni) # disegna l'istogramma
 
 plt.title("r = 3mm d = 10cm N = 100 ") # aggiunge il titolo
-plt.yticks(ticks=y_indexes,labels=valore) # aggiunge titoli asse x
+
+plt.yticks(ticks=np.arange(max(counter.values())+2))
+plt.xticks(ticks=x_indexes,labels=valore) # aggiunge titoli asse x
 
 plt.ylabel("Misurazione")
 plt.xlabel("n ripetizioni")
