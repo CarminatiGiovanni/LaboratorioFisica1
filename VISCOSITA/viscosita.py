@@ -21,7 +21,7 @@ v = np.power((data - media),2)
 VALORE = "{0:.2f} ± {1:.2f}".format(media,sigma)
 
 spacing = np.arange(min(data),max(data), sigma/2)
-plt.hist(data, bins=spacing, density=True, label= 'data', color="#89c4ff")
+plt.hist(data, bins=spacing, density=True, label= 'data', color="#89c4ff",rwidth=0.9)
 
 x = np.linspace(min(data),max(data))
 y = gauss(x,media,sigma)
