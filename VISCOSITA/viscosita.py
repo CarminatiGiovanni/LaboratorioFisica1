@@ -2,35 +2,39 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
-def gauss(x,m,s):
+def fdp(x,m,s):
     h = 1./s/np.sqrt(2)
     z = x-m
     return np.exp(-np.power(h*z, 2.)) *h / np.sqrt(np.pi)
 
-# plt.style.use("fivethirtyeight")
-
 fr = pd.read_csv('r=3mm N=100 d=10cm.csv') #fileread
-data = np.array(fr['misura r=3mm d = 10cm']) #legge colonna '...'
+data = np.array(fr['misura r=3mm d = 10cm']) #legge colonna 'misura r=3mm d = 10cm'
 
+N = len(data)
 sigma = np.std(data)
+sigma_media = sigma/np.sqrt(N)      #sigma tmedio
+min_,max_ = min(data),max(data)
+media = np.mean(data)               #t medio
+var = sigma*sigma                   #varianza
 
-media = round(np.mean(data),2)
+VALORE = "{0:.3f} ± {1:.3f}".format(media,sigma_media)
 
-v = np.power((data - media),2)
-
-VALORE = "{0:.2f} ± {1:.2f}".format(media,sigma)
-
-spacing = np.arange(min(data),max(data), sigma/2)
-plt.hist(data, bins=spacing, density=True, label= 'data', color="#89c4ff",rwidth=0.9)
+m = round(media,2) #voglio che la media sia al centro di un intervallo
+i = round(sigma/2,2) #voglio che ogni intervallo sia largo sigma/2
+offset = round(i/2,3)
+bins = np.concatenate((np.flip(np.arange(m - offset - 0.005,min_ - i,-i)),np.arange(m+offset - 0.005,max_,i)))
+print(bins)
+plt.hist(data,bins=bins, density=True, label= 'data', color="#89c4ff", edgecolor='black')
+plt.xticks(bins, rotation=45)
 
 x = np.linspace(min(data),max(data))
-y = gauss(x,media,sigma)
+y = fdp(x,media,sigma)
 plt.plot(x,y,label=f"$G(x;\mu,\sigma)$", color="#ff0000",linewidth='4')
 
 plt.ylabel("Densità di frequenza")
 plt.xlabel("$t_{caduta}$ (s)")
 
 plt.legend()
-plt.title("Misurazione sfera in caduta nella glicerina\n$\\bf{t_{caduta} = " + str(VALORE) + " s}$")
+plt.title("Misurazione sfera in caduta nella glicerina\n$\\bf{t_{caduta} = " + str(VALORE) + " s}$\n")
 plt.show()
 
