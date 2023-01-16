@@ -3,7 +3,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import scipy.stats as sc
 
-def fdp(x,m,s):
+def fdp(x,m,s): # numpy.array
     h = 1./s/np.sqrt(2)
     z = x-m
     return np.exp(-np.power(h*z, 2.)) *h / np.sqrt(np.pi)
@@ -18,17 +18,17 @@ min_,max_ = min(data),max(data)
 media = np.mean(data)               #t medio
 var = sigma*sigma                   #varianza
 
-VALORE = "{0:.3f} ± {1:.3f}".format(media,sigma_media)
+VALORE: str = "{0:.3f} ± {1:.3f}".format(media,sigma_media)
 
 m = round(media,2) #voglio che la media sia al centro di un intervallo
 i = round(sigma/2,2) #voglio che ogni intervallo sia largo sigma/2
 offset = round(i/2,3)
-bins = np.concatenate((np.flip(np.arange(m - offset - 0.005,min_ - i,-i)),np.arange(m+offset - 0.005,max_,i)))
+bins = np.concatenate((np.flip(np.arange(m - offset - 0.005,min_ - i,-i)),np.arange(m+offset - 0.005,max_+i,i)))
 
 plt.hist(data,bins=bins, density=True, label= 'data', color="#89c4ff", edgecolor='black')
 plt.xticks(bins, rotation=45)
 
-x = np.linspace(min(data),max(data))
+x = np.linspace(min_,max_)
 y = fdp(x,media,sigma)
 plt.plot(x,y,label=f"$G(x;\mu,\sigma)$", color="#ff0000",linewidth='4')
 
