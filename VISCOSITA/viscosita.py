@@ -54,3 +54,4 @@ plt.tight_layout()
 plt.show()
 
 print(sc.chisquare(data,ddof=2))
+print((min_ - max_) * (-100))
