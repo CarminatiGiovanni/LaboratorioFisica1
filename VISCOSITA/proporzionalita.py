@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
-fr = pd.read_csv('T=18,5.csv') #fileread
+fr = pd.read_csv('T=24,5.csv') #fileread
 
 mm2 = np.array(fr["2"])
 mm3 = np.array(fr["3"])
@@ -21,9 +21,10 @@ v_medie = 0.2/t_medie
 
 print(v_medie)
 
-
-plt.plot([2,3,4,5,6],v_medie, 'ro')
-plt.plot([4,9,16,25,36],v_medie, 'go', color="#1ff24a")
+v_medie = np.concatenate(([0],v_medie))
+plt.plot([0,2,3,4,5,6],v_medie)
+plt.show()
+plt.plot([0,4,9,16,25,36],v_medie, color="#1ff24a")
 plt.show()
 
 
