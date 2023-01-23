@@ -8,3 +8,5 @@ volume_sferetta_5mm = (4.0/3)*np.pi*np.power(0.005,3)
 densita_sferetta = round(massa_sferetta_5mm / volume_sferetta_5mm,1)
 
 print(densita_sferetta)
+
+# 1.256
