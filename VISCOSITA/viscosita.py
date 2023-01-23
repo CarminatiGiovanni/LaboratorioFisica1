@@ -3,6 +3,8 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import scipy.stats as sc
 
+#https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chisquare.html
+
 def fdp(x,m,s): # numpy.array
     h = 1./s/np.sqrt(2)
     z = x-m
