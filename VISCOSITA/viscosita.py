@@ -26,7 +26,7 @@ offset = round(i/2,3)
 bins = np.concatenate((np.flip(np.arange(m - offset - 0.005,min_ - i,-i)),np.arange(m+offset - 0.005,max_+i,i)))
 
 plt.hist(data,bins=bins, density=True, label= 'data', color="#89c4ff", edgecolor='black')
-plt.xticks(bins, rotation=45)
+plt.xticks(bins[:-1], rotation=45)
 
 x = np.linspace(min_,max_)
 y = fdp(x,media,sigma)
