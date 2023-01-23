@@ -16,7 +16,18 @@ sigma = np.std(data)
 sigma_media = sigma/np.sqrt(N)      #sigma tmedio
 min_,max_ = min(data),max(data)
 media = np.mean(data)               #t medio
-var = sigma*sigma                   #varianza
+var = sigma*sigma                #varianza
+
+print(
+
+f"""
+    max: {max_}
+    min: {min_}
+    media: {media}
+    sigma: {sigma}
+"""
+
+)
 
 VALORE: str = "{0:.3f} ± {1:.3f}".format(media,sigma_media)
 
@@ -40,4 +51,4 @@ plt.title("Misurazione sfera in caduta nella glicerina\n$\\bf{t_{caduta} = " + s
 plt.tight_layout()
 plt.show()
 
-print(sc.chisquare(data))
+print(sc.chisquare(data,ddof=2))
