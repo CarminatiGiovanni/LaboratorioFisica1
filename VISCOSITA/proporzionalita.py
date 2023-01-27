@@ -21,14 +21,24 @@ v_medie = 0.2/t_medie
 
 v_medie = np.concatenate(([0],v_medie))
 
-# plt.plot([0,2,3,4,5,6],v_medie)
-# plt.show()
-# plt.plot([0,4,9,16,25,36],v_medie, color="#1ff24a")
-# plt.show()
-# plt.plot([0,2,3,4,5,6],v_medie)
-# plt.yscale('log')
-# plt.xscale('log')
-# plt.show()
+print(plt.style.available)
+plt.style.use('tableau-colorblind10')
+
+plt.figure("accordo dati")
+
+plt_retta = plt.subplot2grid((3, 3), (0, 0))
+plt_parabola = plt.subplot2grid((3, 3), (1, 0))
+plt_log = plt.subplot2grid((3, 3), (2, 0))
+plt_accordo = plt.subplot2grid((3, 3), (0, 1), colspan=2,rowspan=3)
+
+plt_retta.plot([0,2,3,4,5,6],v_medie)
+plt_retta.set_title("raggio-velocità")
+
+plt_parabola.plot([0,4,9,16,25,36],v_medie, color="#1ff24a")
+plt_parabola.set_title("$raggio^{2}$-velocità")
+
+plt_log.plot([0,2,3,4,5,6],v_medie, scalex='log', scaley='log')
+plt_log.set_title("raggio-velocità (log)")
 
 # interpoliamo // la ringraziamo
 
@@ -61,6 +71,12 @@ print(F"""
 
 x_exp = np.linspace(min(x),max(x),100)
 y_exp = A + B * x_exp
-plt.plot(x_exp,y_exp)
-plt.plot(x,y,"o", color="#1ff24a")
+
+plt_accordo.plot(x_exp,y_exp)
+plt_accordo.plot(x,y,"o", color="#1ff24a")
+plt_accordo.set_title('accordo punti-retta')
+
+# set the spacing between subplots
+#plt.axes(rect, projection=None, polar=False, **kwargs)
+plt.tight_layout()
 plt.show()
