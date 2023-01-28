@@ -3,7 +3,12 @@ from mpl_toolkits.axisartist.axislines import AxesZero
 import pandas as pd
 from matplotlib import pyplot as plt
 
-fr = pd.read_csv('T=18,5.csv') #fileread
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+FILE = dir_path + '/../CSV/' + 'T=18,5.csv'
+
+
+fr = pd.read_csv(FILE) #fileread
 mm2 = np.array(fr["2"])
 mm3 = np.array(fr["3"])
 mm4 = np.array(fr["4"])

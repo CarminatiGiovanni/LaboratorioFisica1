@@ -3,15 +3,17 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import scipy.stats as sc
 
-#https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chisquare.html
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+FILE = dir_path + '/../CSV/' + 'r=3mm N=100 d=10cm.csv'
+
+fr = pd.read_csv(FILE) #fileread
+data = np.array(fr['misura r=3mm d = 10cm']) #legge colonna 'misura r=3mm d = 10cm'
 
 def fdp(x,m,s): # numpy.array
     h = 1./s/np.sqrt(2)
     z = x-m
     return np.exp(-np.power(h*z, 2.)) *h / np.sqrt(np.pi)
-
-fr = pd.read_csv('r=3mm N=100 d=10cm.csv') #fileread
-data = np.array(fr['misura r=3mm d = 10cm']) #legge colonna 'misura r=3mm d = 10cm'
 
 N = len(data)
 sigma = np.std(data)
@@ -19,6 +21,7 @@ sigma_media = sigma/np.sqrt(N)      #sigma tmedio
 min_,max_ = min(data),max(data)
 media = np.mean(data)               #t medio
 var = sigma*sigma                #varianza
+CHIquadro = sc.chisquare(data,ddof=2)
 
 print(
 
@@ -38,6 +41,8 @@ i = round(sigma/2,2) #voglio che ogni intervallo sia largo sigma/2
 offset = round(i/2,3)
 bins = np.concatenate((np.flip(np.arange(m - offset - 0.005,min_ - i,-i)),np.arange(m+offset - 0.005,max_+i,i)))
 
+plt.figure("Analisi dati raccolti")
+
 plt.hist(data,bins=bins, density=True, label= 'data', color="#89c4ff", edgecolor='black')
 plt.xticks(bins[:-1], rotation=45)
 
@@ -52,6 +57,3 @@ plt.legend()
 plt.title("Misurazione sfera in caduta nella glicerina\n$\\bf{t_{caduta} = " + str(VALORE) + " s}$\n")
 plt.tight_layout()
 plt.show()
-
-print(sc.chisquare(data,ddof=2))
-print((min_ - max_) * (-100))
