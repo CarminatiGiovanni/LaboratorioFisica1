@@ -3,7 +3,6 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 fr = pd.read_csv('T=18,5.csv') #fileread
-
 mm2 = np.array(fr["2"])
 mm3 = np.array(fr["3"])
 mm4 = np.array(fr["4"])
@@ -12,59 +11,59 @@ mm6 = np.array(fr["6"])
 
 data = np.array([mm2,mm3,mm4,mm5,mm6])
 
-t_medie = np.array([])
+t_medie = np.array(list(np.mean(i) for i in data)) # calcola le medie dei tempi per ogni diametro
+v_medie = np.concatenate(([0],0.2/t_medie)) # calcola le medie delle velocità per ogni diametro (primo valore 0)
 
-for i in data:
-    t_medie = np.append(t_medie,round(np.mean(i),5))
+#k = (plt.style.available)
+#plt.style.use(stile)
 
-v_medie = 0.2/t_medie
+plt.figure("titolo",figsize=(10,10)) # set titolo grafici
 
-v_medie = np.concatenate(([0],v_medie))
-
-print(plt.style.available)
-plt.style.use('tableau-colorblind10')
-
-plt.figure("accordo dati")
-
+# costruisce gli spazi in cui dividere i grafici
 plt_retta = plt.subplot2grid((3, 3), (0, 0))
 plt_parabola = plt.subplot2grid((3, 3), (1, 0))
 plt_log = plt.subplot2grid((3, 3), (2, 0))
 plt_accordo = plt.subplot2grid((3, 3), (0, 1), colspan=2,rowspan=3)
 
-plt_retta.plot([0,2,3,4,5,6],v_medie)
+plt_retta.plot([0,2,3,4,5,6],v_medie, color="red")
 plt_retta.set_title("raggio-velocità")
 
-plt_parabola.plot([0,4,9,16,25,36],v_medie, color="#1ff24a")
+plt_parabola.plot([0,4,9,16,25,36],v_medie, color="orange")
 plt_parabola.set_title("$raggio^{2}$-velocità")
 
-plt_log.plot([0,2,3,4,5,6],v_medie, scalex='log', scaley='log')
+plt_log.plot([0,2,3,4,5,6],v_medie, color="purple")
+plt_log.set_xscale('log')
+plt_log.set_yscale('log')
 plt_log.set_title("raggio-velocità (log)")
 
 # interpoliamo // la ringraziamo
 
-y = v_medie
-x = np.array([0.0,4.0,9.0,16.0,25.0,36.0])
+# Costruiamo la retta che meglio descrive i nostri valori:
+# y = B + Ax
+
+y = v_medie # rinomino per comodità
+x = np.array([0,4,9,16,25,36], dtype=np.float16)
 N = len(x)
 
-delta = N * np.sum(np.power(x,2)) - np.power(np.sum(x),2)
+delta = N * np.sum(np.power(x,2)) - np.power(np.sum(x),2) # Δ
 
-A = (np.sum(np.power(x,2))*np.sum(y)-np.sum(x)*np.sum(x*y))/delta
-B = (N*np.sum(x*y)-np.sum(x)*np.sum(y))/delta
+A = (np.sum(np.power(x,2))*np.sum(y)-np.sum(x)*np.sum(x*y))/delta # A
+B = (N*np.sum(x*y)-np.sum(x)*np.sum(y))/delta #B
 
-v = y - A - B * x
-sigmaY = np.sqrt((1.0/N) * np.sum(np.power(y - A - B * x,2)))
-sigmaA = sigmaY * np.sqrt(np.sum(x*x)/delta)
-sigmaB = sigmaY * np.sqrt(N/delta)
+v = y - A - B * x # v dovrebbe essere più piccola possibile
+sigmaY = np.sqrt((1.0/N) * np.sum(np.power(y - A - B * x,2))) # incertezza sulla Y
+sigmaA = sigmaY * np.sqrt(np.sum(x*x)/delta) # incertezza su A
+sigmaB = sigmaY * np.sqrt(N/delta) # incertezza su B
 
 print(F"""
-    delta: {delta}
-    A: {A}
-    sigmaA: {sigmaA}
+    delta: {round(delta,4)}
+    A: {round(A,4)}
+    sigmaA: {round(sigmaA,4)}
 
-    B: {B}
-    sigmaB: {sigmaB}
+    B: {round(B,4)}
+    sigmaB: {round(sigmaB,4)}
 
-    sigmaY: {sigmaY}
+    sigmaY: {round(sigmaY,4)}
 
 """)
 
