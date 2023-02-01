@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 
 import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
-FILE = dir_path + '/../CSV/' + 'T=18,5°C.csv'
+FILE = dir_path + '/../CSV/' + 'T=24.5°C.csv'
 
 
 fr = pd.read_csv(FILE) #fileread
