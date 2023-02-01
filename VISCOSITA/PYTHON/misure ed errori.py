@@ -39,9 +39,11 @@ plt.plot(x,y,label=f"$G(x;\mu,\sigma)$", color="#ff0000",linewidth='4') # sovrap
 description: str = "" + "$\\bar{t}$ = " + str(round(media,3)) + ", $\sigma$ = " + str(round(sigma,2)) + ", $\sigma^2$ = " + str(round(var,2)) + ", pvalue($\\tilde{\\chi}^2$) = " + str(CHIquadro * 100) + '%'
 
 plt.ylabel("Densità di frequenza")
-plt.xlabel("$t_{caduta}$ (s)" + '\n\n' + description)
+plt.xlabel("$t_{caduta}$ (s)")
 
 plt.legend()
 plt.title("Misurazione sfera in caduta nella glicerina\n$\\bf{t_{caduta} = " + str(VALORE) + " s}$\n")
 plt.tight_layout()
 plt.show()
+
+print(description)
