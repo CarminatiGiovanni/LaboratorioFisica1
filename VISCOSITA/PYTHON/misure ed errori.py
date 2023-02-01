@@ -5,7 +5,7 @@ import scipy.stats as sc
 
 import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
-FILE = dir_path + '/../CSV/' + 'r=3mm N=100 d=10cm.csv'
+FILE = dir_path + '/../CSV/' + 'T=24.5°C 100 misure d=10cm.csv'
 
 fr = pd.read_csv(FILE) #fileread
 data = np.array(fr['misura r=3mm d = 10cm']) #legge colonna 'misura r=3mm d = 10cm'
