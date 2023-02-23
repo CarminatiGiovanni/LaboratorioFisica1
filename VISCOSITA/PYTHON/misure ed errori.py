@@ -19,7 +19,7 @@ sigma_media: const = sigma / np.sqrt(N)  # sigma tmedio
 min_, max_ = min(data), max(data)  # massimo e minimo valore
 media: const = np.mean(data)  # t medio
 var: const = sigma * sigma  # varianza (sigma quadro)
-CHIquadro: const = sc.chisquare(data, ddof=2).value  # test del chiquadro
+CHIquadro: const = sc.chisquare(data, ddof=2).pvalue  # test del chiquadro
 print(type(CHIquadro))
 
 VALORE: str = "{0:.3f} ± {1:.3f}".format(media, sigma_media)
