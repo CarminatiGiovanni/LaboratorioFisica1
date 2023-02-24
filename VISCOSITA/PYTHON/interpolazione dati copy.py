@@ -33,16 +33,17 @@ v_medie2 = np.concatenate(([0], 0.2 / t_medie2))  # calcola le medie delle veloc
 
 raggi = np.array([0, 2, 3, 4, 5, 6])/2
 
-plt.plot(raggi, v_medie1,'o-', color="red", label="T=24.5°C")
-plt.plot(raggi, v_medie2,'o-', color="blue", label="18.5°C")
-
-plt.xscale('log')
-plt.yscale('log')
-plt.xlabel("$r$ [mm]")
-plt.ylabel("$v$ [m/s]")
-plt.title("raggio - velocità")
-plt.legend()
-plt.show()
+# plt.figure(figsize=(4,6))
+# plt.plot(raggi**2, v_medie1,'o-', color="red", label="T=24.5°C")
+# plt.plot(raggi**2, v_medie2,'o-', color="blue", label="18.5°C")
+# plt.xticks(raggi**2)
+# # plt.xscale('log')
+# # plt.yscale('log')
+# plt.xlabel("$r$ [mm]")
+# plt.ylabel("$v$ [m/s]")
+# plt.title("raggio$^2$ - velocità (log)")
+# plt.legend()
+# plt.show()
 
 """
 
@@ -58,49 +59,80 @@ plt_log.set_title("raggio-velocità (log)")
 plt_log.set_ylim(bottom=0)
 plt_log.set_xlim(left=0)
 
+"""
+
 # interpoliamo // la ringraziamo
 
 # Costruiamo la retta che meglio descrive i nostri valori:
 # y = B + Ax
 
-y = v_medie[1:]  # rinomino per comodità
-x = np.array([4, 9, 16, 25, 36], dtype=np.float16)
-N = len(x)
+y1 = v_medie1[1:]  # rinomino per comodità
+x1 = raggi[1:]**2
+N1 = len(x1)
 
-delta = N * np.sum(np.power(x, 2)) - np.power(np.sum(x), 2)  # Δ
+delta1 = N1 * np.sum(np.power(x1, 2)) - np.power(np.sum(x1), 2)  # Δ
 
-A = (np.sum(np.power(x, 2)) * np.sum(y) - np.sum(x) * np.sum(x * y)) / delta  # A
-B = (N * np.sum(x * y) - np.sum(x) * np.sum(y)) / delta  # B
+A1 = (np.sum(np.power(x1, 2)) * np.sum(y1) - np.sum(x1) * np.sum(x1 * y1)) / delta1  # A
+B1 = (N1 * np.sum(x1 * y1) - np.sum(x1) * np.sum(y1)) / delta1  # B
 
-v = y - A - B * x  # v dovrebbe essere più piccola possibile
-sigmaY = np.sqrt(
-    (1.0 / (N - 2)) * np.sum(np.power(y - A - B * x, 2)))  # incertezza sulla Y (notare correzione bessel -2)
-sigmaA = sigmaY * np.sqrt(np.sum(x * x) / delta)  # incertezza su A
-sigmaB = sigmaY * np.sqrt(N / delta)  # incertezza su B
-"""
+v1 = y1 - A1 - B1 * x1  # v dovrebbe essere più piccola possibile
+sigmaY1 = np.sqrt((1.0 / (N1 - 2)) * np.sum(np.power(y1 - A1 - B1 * x1, 2)))  # incertezza sulla Y (notare correzione bessel -2)
+sigmaA1 = sigmaY1 * np.sqrt(np.sum(x1 * x1) / delta1)  # incertezza su A
+sigmaB1 = sigmaY1 * np.sqrt(N1 / delta1)  # incertezza su B
 
-# print(F"""
-#     delta: {round(delta, 4)}
-#     A: {round(A, 4)}
-#     sigmaA: {round(sigmaA, 4)}
-
-#     B: {round(B, 4)}
-#     sigmaB: {round(sigmaB, 4)}
-
-#     sigmaY: {round(sigmaY, 4)}
-
-# """)
-
-# x_exp = np.linspace(0, max(x) + 2, 100)
-# y_exp = A + B * x_exp
-
-# plt_accordo.plot(x_exp, y_exp, color='blue')
-# plt_accordo.errorbar(x, y, yerr=sigmaY, fmt='o', ecolor='black', color="#1ff24a", capsize=10)
-# plt_accordo.set_title('accordo punti-retta')
-# plt_accordo.set_ylim(bottom=0)
-# plt_accordo.set_xlim(left=0)
+x_exp1 = np.linspace(0.8, max(x1) + 0.2, 100)
+y_exp1 = A1 + B1 * x_exp1
 
 # # set the spacing between subplots
 
-# plt.tight_layout()
+y2 = v_medie2[1:]  # rinomino per comodità
+x2 = raggi[1:]**2
+N2 = len(x2)
+
+delta2 = N2 * np.sum(np.power(x2, 2)) - np.power(np.sum(x2), 2)  # Δ
+
+A2 = (np.sum(np.power(x2, 2)) * np.sum(y2) - np.sum(x2) * np.sum(x2 * y2)) / delta2  # A
+B2 = (N2 * np.sum(x2 * y2) - np.sum(x2) * np.sum(y2)) / delta2  # B
+
+v2 = y2 - A2 - B2 * x2  # v dovrebbe essere più piccola possibile
+sigmaY2 = np.sqrt((1.0 / (N2 - 2)) * np.sum(np.power(y2 - A2 - B2 * x2, 2)))  # incertezza sulla Y (notare correzione bessel -2)
+sigmaA2 = sigmaY2 * np.sqrt(np.sum(x2 * x2) / delta2)  # incertezza su A
+sigmaB2 = sigmaY2 * np.sqrt(N2 / delta2)  # incertezza su B
+
+x_exp2 = np.linspace(0.8, max(x2) + 0.2, 100)
+y_exp2 = A2 + B2 * x_exp2
+
+
+plt.plot(x_exp1, y_exp1, color='red', label="T=24.5°C")
+plt.plot(x_exp2, y_exp2, color='blue', label="T=18.5°C")
+plt.errorbar(x1, y1, yerr=sigmaY1, fmt='o', ecolor='black', color="red", capsize=10)
+plt.errorbar(x2, y2, yerr=sigmaY2, fmt='o', ecolor='black', color="blue", capsize=10)
+plt.xticks(x2)
+plt.legend()
+plt.title('accordo punti-retta')
+
+plt.tight_layout()
 # plt.show()
+
+print(F"""
+    delta1: {round(delta1, 4)}
+    A1: {round(A1, 4)}
+    sigmaA1: {round(sigmaA1, 4)}
+
+    B1: {round(B1, 4)}
+    sigmaB1: {round(sigmaB1, 4)}
+
+    sigmaY1: {round(sigmaY1, 4)}
+
+    --------------------------------------
+
+    delta2: {round(delta2, 4)}
+    A2: {round(A2, 4)}
+    sigmaA2: {round(sigmaA2, 4)}
+
+    B2: {round(B2, 4)}
+    sigmaB2: {round(sigmaB2, 4)}
+
+    sigmaY2: {round(sigmaY2, 4)}
+
+""")
