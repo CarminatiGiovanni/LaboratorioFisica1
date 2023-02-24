@@ -19,7 +19,7 @@ sigma_media: const = sigma / np.sqrt(N)  # sigma tmedio
 min_, max_ = min(data), max(data)  # massimo e minimo valore
 media: const = np.mean(data)  # t medio
 var: const = sigma * sigma  # varianza (sigma quadro)
-CHIquadro: const = sc.chisquare(data, ddof=2).pvalue  # test del chiquadro
+CHIquadro: const = sc.chisquare(data).pvalue  # test del chiquadro
 
 VALORE: str = "{0:.3f} ± {1:.3f}".format(media, 0.008) # round approssima solo alla successiva ciffra decimale e esce 0.001 di meno quindi inserisco il valore manualmente
 
@@ -48,7 +48,7 @@ plt.xlabel("$t_{caduta}$ (s)")
 plt.legend()
 plt.title("Misurazione sfera in caduta nella glicerina\n$\\bf{t_{caduta} = " + str(VALORE) + " s}$\n")
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 print(f"""
     media: {media}
