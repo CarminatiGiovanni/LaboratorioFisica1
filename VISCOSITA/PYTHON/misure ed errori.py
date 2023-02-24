@@ -20,9 +20,8 @@ min_, max_ = min(data), max(data)  # massimo e minimo valore
 media: const = np.mean(data)  # t medio
 var: const = sigma * sigma  # varianza (sigma quadro)
 CHIquadro: const = sc.chisquare(data, ddof=2).pvalue  # test del chiquadro
-print(type(CHIquadro))
 
-VALORE: str = "{0:.3f} ± {1:.3f}".format(media, sigma_media)
+VALORE: str = "{0:.3f} ± {1:.3f}".format(media, 0.008) # round approssima solo alla successiva ciffra decimale e esce 0.001 di meno quindi inserisco il valore manualmente
 
 m = round(media, 2)  # voglio che la media sia al centro di un intervallo
 i = round(sigma / 2, 2)  # voglio che ogni intervallo sia largo sigma/2
@@ -51,4 +50,9 @@ plt.title("Misurazione sfera in caduta nella glicerina\n$\\bf{t_{caduta} = " + s
 plt.tight_layout()
 plt.show()
 
-print(description)
+print(f"""
+    media: {media}
+    varianza: {var}
+    dev std: {sigma}
+    dev std media: {sigma_media}
+""")
