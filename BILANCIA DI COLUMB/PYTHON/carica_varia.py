@@ -5,15 +5,16 @@ from matplotlib import pyplot as plt
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-FILE = dir_path + '/../CSV/' + "misure_dfissa.csv"
+FILE = dir_path + '/../CSV/' + "carica_varia.csv"
 
 fr = pd.read_csv(FILE)  # fileread
-V = np.array(fr["V"])
+V = np.array(fr["V2"])
 teta1 = np.array(fr["teta1"])
 teta2 = np.array(fr["teta2"])
 teta3 = np.array(fr["teta3"])
 
 teta = np.array([round(np.average([teta1[i],teta2[i],teta3[i]]),0) for i in range(0,len(teta1))],dtype=np.int16)
 
-plt.plot(V**2,teta,'o-')
+plt.plot(V * 6,teta,"o-")
+plt.xticks(V*6)
 plt.show()
