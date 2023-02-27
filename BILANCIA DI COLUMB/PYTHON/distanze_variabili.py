@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from A import calcA
+from A import calcA, calcDeltaA
 
 import os
 
@@ -24,12 +24,15 @@ tetaRadB = tetaRad/B
 
 x = 1/(distanze**2)
 A = calcA(x,tetaRadB)
-print(A)
+deltaA = calcDeltaA(x,tetaRadB)
+print(A,deltaA)
 x_A = np.linspace(min(x),max(x),100)
 y_A = A*x_A
 
-plt.plot(x_A,y_A,color="green")
-plt.plot(x,tetaRad, color="red")
-plt.plot(x,tetaRadB)
+plt.title("1/$r^2$ (1/$m^2$) - teta (rad)")
+plt.plot(x,tetaRad, color="lime", label="distanze - angoli no correzione")
+plt.plot(x,tetaRadB, color="blue", label="distanze - angoli corretti")
+plt.plot(x_A,y_A,color="red", label="retta interpolata", linewidth="4")
 plt.xticks(x)
+plt.legend()
 plt.show()
