@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-FILE = dir_path + '/../CSV/' + "misure_dfissa.csv"
+FILE = dir_path + '/../CSV/' + "d_fissa_v_uguale_per_ogni_carica"
 
 fr = pd.read_csv(FILE)  # fileread
 V = np.array(fr["V"])
