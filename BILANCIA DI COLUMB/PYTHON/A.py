@@ -17,4 +17,4 @@ def calcDelta(X):
 def calcDeltaA(X,Y) -> float:
     if len(X) != len(Y):
         raise "Non hanno la stessa lunghezza coglione"
-    return np.sqrt(len(Y)/calcDelta(X))*np.std(Y)
+    return np.sqrt(float(len(Y))/calcDelta(X))*np.sqrt(((Y - calcA(X,Y)*X)**2).sum()/len(Y))
