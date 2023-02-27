@@ -19,4 +19,20 @@ teta = np.array([round(np.average([teta1[i],teta2[i],teta3[i],teta4[i],teta5[i]]
 
 plt.plot(m,teta,'o-',color="red")
 plt.xticks(m)
-plt.show()
+# plt.show()
+
+k_tanti = (0.000001*m*9.81)/((teta/180)*np.pi)
+k = np.mean(k_tanti)
+delta_k = np.std(k_tanti)
+
+print("costante torsione: ",k)
+print("deviazione: ",delta_k)
+
+
+forze = k * teta
+
+CONSTANTE_DIELETTRICA_ASSOLUTA = (k*(72/180)*np.pi*0.01)/(4*np.pi*np.power(0.017,2)*np.power(6000,2))
+print("CONSTANTE_DIELETTRICA_ASSOLUTA: ",CONSTANTE_DIELETTRICA_ASSOLUTA)
+
+
+
