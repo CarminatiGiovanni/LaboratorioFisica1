@@ -32,7 +32,7 @@ plt.plot(F,teta,'o-',color="red", label="peso - teta")
 plt.plot(x_A,y_A,color="green",linewidth="4", label="retta interpolata")
 plt.legend()
 plt.xticks(F)
-# plt.show()
+plt.show()
 
 print("deltaA/A", deltaA/A)
 

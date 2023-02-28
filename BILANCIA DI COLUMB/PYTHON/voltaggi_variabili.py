@@ -16,7 +16,7 @@ V_fissa = np.array(fr1["V"])
 teta1 = np.array(fr1["teta1"])
 teta2 = np.array(fr1["teta2"])
 teta3 = np.array(fr1["teta3"])
-v_fissa = V_fissa ** 2 # considero il prodotto delle cariche
+v_fissa = (V_fissa*1000) ** 2 # considero il prodotto delle cariche
 teta_fissa = np.array([round(np.average([teta1[i],teta2[i],teta3[i]]),0) for i in range(0,len(teta1))],dtype=np.int16)
 teta_fissa = (teta_fissa/180)*np.pi
 
@@ -25,7 +25,7 @@ v_variabile = np.array(fr2["V2"])
 teta1 = np.array(fr2["teta1"])
 teta2 = np.array(fr2["teta2"])
 teta3 = np.array(fr2["teta3"])
-v_variabile = v_variabile * 6 # la seconda carica aveva valore fisso 6
+v_variabile = v_variabile * 1000 * 6000 # la seconda carica aveva valore fisso 6kV
 teta_variabile = np.array([round(np.average([teta1[i],teta2[i],teta3[i]]),0) for i in range(0,len(teta1))],dtype=np.int16)
 teta_variabile = (teta_variabile/180)*np.pi
 
