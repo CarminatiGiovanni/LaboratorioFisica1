@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from A import calcA,calcDeltaA
+from B import calcB,calcDeltaB
 
 import os
 
@@ -31,17 +31,17 @@ teta_variabile = (teta_variabile/180)*np.pi
 
 todosX = np.concatenate([v_variabile,v_fissa])
 todosY = np.concatenate([teta_variabile,teta_fissa])
-A = calcA(todosX,todosY)
-deltaA = calcDeltaA(todosX,todosY)
-print(A,deltaA)
+B = calcB(todosX, todosY)
+deltaB = calcDeltaB(todosX, todosY)
+print(B, deltaB)
 
-x_A = np.linspace(min(todosX),max(todosX),100)
-y_A = A*x_A
+x_B = np.linspace(min(todosX), max(todosX), 100)
+y_B = B * x_B
 
 plt.title("prodotto Volt - teta(rad)")
 plt.plot(v_fissa,teta_fissa,'o-', color ="brown", label="cariche uguali")
 plt.plot(v_variabile,teta_variabile,'o-', color = "grey", label="cariche diverse")
-plt.plot(x_A,y_A,color="#ab11f2", linewidth="4", label="retta interpolata")
+plt.plot(x_B, y_B, color="#ab11f2", linewidth="4", label="retta interpolata")
 plt.legend()
 plt.show()
 

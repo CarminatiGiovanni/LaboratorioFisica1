@@ -1,6 +1,6 @@
 import numpy as np
 
-def calcA(X, Y) -> float:
+def calcB(X, Y) -> float:
     if len(X) != len(Y):
         raise "Non hanno la stessa lunghezza coglione"
     N = len(Y)
@@ -14,7 +14,7 @@ def calcA(X, Y) -> float:
 def calcDelta(X):
     return len(X)*np.sum(X*X)-np.power(X.sum(),2)
 
-def calcDeltaA(X,Y) -> float:
+def calcDeltaB(X, Y) -> float:
     if len(X) != len(Y):
         raise "Non hanno la stessa lunghezza coglione"
-    return np.sqrt(float(len(Y))/calcDelta(X))*np.sqrt(((Y - calcA(X,Y)*X)**2).sum()/len(Y))
+    return np.sqrt(float(len(Y))/calcDelta(X))*np.sqrt(((Y - calcB(X, Y) * X) ** 2).sum() / len(Y))

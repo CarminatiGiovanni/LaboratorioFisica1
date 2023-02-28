@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from A import calcA,calcDeltaA
+from B import calcB,calcDeltaB
 
 import os
 
@@ -21,23 +21,23 @@ teta = (teta/180)*np.pi # rad
 F = m * 9.81
 
 
-A = calcA(F,teta)
-deltaA = calcDeltaA(F,teta)
-print(A,deltaA)
-x_A = np.linspace(min(F),max(F),100)
-y_A = A*x_A
+B = calcB(F, teta)
+deltaB = calcDeltaB(F, teta)
+print(B, deltaB)
+x_B = np.linspace(min(F), max(F), 100)
+y_B = B * x_B
 
 plt.title("peso (N) - teta (rad) \nTORSIONE")
 plt.plot(F,teta,'o-',color="red", label="peso - teta")
-plt.plot(x_A,y_A,color="green",linewidth="4", label="retta interpolata")
+plt.plot(x_B, y_B, color="green", linewidth="4", label="retta interpolata")
 plt.legend()
 plt.xticks(F)
 plt.show()
 
-print("deltaA/A", deltaA/A)
+print("deltaA/A", deltaB / B)
 
-K = 1/A
-deltaK = (deltaA/(A**2))
+K = 1 / B
+deltaK = (deltaB / (B ** 2))
 print(K, deltaK)
 
 
