@@ -22,5 +22,4 @@ print(EPSILON, sigmaEPSILON)
 
 EPSILON = (voltaggio_variabile_A * COSTANTE_DI_TORSIONE * 0.01)/(4*np.pi*np.power(raggio,2))
 sigmaEPSILON = EPSILON * np.sqrt(np.power(sigma_COSTANTE_DI_TORSIONE/COSTANTE_DI_TORSIONE,2)+np.power(delta_voltaggio_variabile_A/voltaggio_variabile_A,2))
-
 print(EPSILON, sigmaEPSILON)
