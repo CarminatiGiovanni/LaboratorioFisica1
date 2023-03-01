@@ -17,16 +17,16 @@ def calcA(X,Y) -> float:
 def calcDelta(X):
     return len(X)*np.sum(X*X)-np.power(X.sum(),2)
 
-def calcDeltaB(X, Y) -> float:
-    if len(X) != len(Y):
-        raise "Non hanno la stessa lunghezza coglione"
-    return np.sqrt(float(len(Y))/calcDelta(X))*calcDeltaY_y_A_BX(X,Y)
-
-# def calcDeltaY_y_Bx(X,Y) -> float:
-#     return np.sqrt(((Y - calcB(X, Y) * X) ** 2).sum() / len(Y))
-
-def calcDeltaY_y_A_BX(X,Y) -> float:
+def calcSigmaY_y_A_BX(X, Y) -> float:
     return np.sqrt(((Y - calcA(X,Y) - calcB(X,Y) * X) ** 2).sum() / len(Y))
 
-def calcDeltaA(X,Y) -> float:
-    return calcDeltaY_y_A_BX(X,Y)*np.sqrt(np.sum(X**2)/calcDelta(X))
+def calcSigmaB(X, Y) -> float:
+    if len(X) != len(Y):
+        raise "Non hanno la stessa lunghezza coglione"
+    return np.sqrt(float(len(Y))/calcDelta(X))*calcSigmaY_y_A_BX(X, Y)
+
+def calcSigmaY_y_Bx(X, Y) -> float:
+    return np.sqrt(((Y - calcB(X, Y) * X) ** 2).sum() / len(Y))
+
+def calcSigmaA(X, Y) -> float:
+    return calcSigmaY_y_A_BX(X, Y)*np.sqrt(np.sum(X ** 2) / calcDelta(X))

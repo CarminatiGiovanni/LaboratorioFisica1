@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from B import calcB,calcDeltaB, calcDeltaY_y_A_BX, calcA, calcDeltaA
+from B import calcB,calcSigmaB, calcSigmaY_y_A_BX, calcA, calcSigmaA
 
 import os
 
@@ -33,8 +33,8 @@ x1 = raggi[1:]**2
 
 B1 = calcB(x1,y1) #(np.sum(np.power(x1, 2)) * np.sum(y1) - np.sum(x1) * np.sum(x1 * y1)) / delta1  # A
 A1 = calcA(x1,y1)
-deltaB1 = calcDeltaB(x1,y1)
-sigmaY1 = calcDeltaY_y_A_BX(x1,y1)
+deltaB1 = calcSigmaB(x1, y1)
+sigmaY1 = calcSigmaY_y_A_BX(x1, y1)
 
 x_exp1 = np.linspace(min(x1), max(x1), 100)
 y_exp1 = B1 * x_exp1 + A1
@@ -47,8 +47,8 @@ x2 = raggi[1:]**2
 
 B2 = calcB(x2,y2)
 A2 = calcA(x2,y2)
-deltaB2 = calcDeltaB(x2,y2)
-sigmaY2 = calcDeltaY_y_A_BX(x2,y2)
+deltaB2 = calcSigmaB(x2, y2)
+sigmaY2 = calcSigmaY_y_A_BX(x2, y2)
 
 x_exp2 = np.linspace(min(x2), max(x2), 100)
 y_exp2 = B2*x_exp2 + A2
