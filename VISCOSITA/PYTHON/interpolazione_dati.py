@@ -26,7 +26,7 @@ raggi = (np.array([0, 2, 3, 4, 5, 6])/2)*0.001
 # interpoliamo // la ringraziamo
 
 # Costruiamo la retta che meglio descrive i nostri valori:
-# y = B + Ax
+# y = A + Bx
 
 y1 = v_medie1[1:]  # rinomino per comodità
 x1 = raggi[1:]**2
