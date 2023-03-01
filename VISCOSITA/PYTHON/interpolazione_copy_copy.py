@@ -33,6 +33,7 @@ x1 = raggi[1:]**2
 
 B1 = calcB(x1,y1) #(np.sum(np.power(x1, 2)) * np.sum(y1) - np.sum(x1) * np.sum(x1 * y1)) / delta1  # A
 A1 = calcA(x1,y1)
+deltaA1 = calcSigmaA(x1,y1)
 deltaB1 = calcSigmaB(x1, y1)
 sigmaY1 = calcSigmaY_y_A_BX(x1, y1)
 
@@ -47,11 +48,12 @@ x2 = raggi[1:]**2
 
 B2 = calcB(x2,y2)
 A2 = calcA(x2,y2)
+deltaA2 = calcSigmaA(x2,y2)
 deltaB2 = calcSigmaB(x2, y2)
 sigmaY2 = calcSigmaY_y_A_BX(x2, y2)
 
 x_exp2 = np.linspace(min(x2), max(x2), 100)
-y_exp2 = B2*x_exp2 + A2
+y_exp2 = B2*x_exp2  + A2
 
 
 plt.plot(x_exp1, y_exp1, color='red', label="T=24.5°C")
@@ -61,6 +63,8 @@ plt.errorbar(x2, y2, yerr=sigmaY2, fmt='o', ecolor='black', color="blue", capsiz
 plt.xticks(x2)
 plt.legend()
 plt.title('accordo punti-retta')
+plt.xlabel("$r^2 (m)$")
+plt.ylabel("$v (m/s)$")
 
 plt.tight_layout()
 plt.show()
@@ -69,8 +73,12 @@ print(f"""
         A1: {A1}
         B1: {B1}
         DELTA Y1: {sigmaY1}
+        sigmaA1: {deltaA1}
+        sigmaB1: {deltaB1}
 
         A2: {A2}
         B2: {B2}   
-        DELTA Y2: {sigmaY2}   
+        DELTA Y2: {sigmaY2}
+        sigmaA2: {deltaA2}
+        sigmaB2: {deltaB2}   
       """)
