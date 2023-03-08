@@ -1,12 +1,12 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from B import calcB,calcDeltaB
+from interpolazione import RettaInterpolata
 
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-FILE = dir_path + '/../CSV/' + 'torsione.csv'
+FILE = dir_path + '/../CSV/' + 'massa_teta_C.csv'
 
 fr = pd.read_csv(FILE)  # fileread
 m = np.array(fr["mg"]) * 0.000001 # kg
@@ -20,39 +20,16 @@ teta = np.array([round(np.average([teta1[i],teta2[i],teta3[i],teta4[i],teta5[i]]
 teta = (teta/180)*np.pi # rad
 F = m * 9.81
 
-
-B = calcB(F, teta)
-deltaB = calcDeltaB(F, teta)
-print(B, deltaB)
-x_B = np.linspace(min(F), max(F), 100)
-y_B = B * x_B
+r = RettaInterpolata(F,teta,(1/180)*np.pi,'BX')
 
 plt.title("peso (N) - teta (rad) \nTORSIONE")
-plt.plot(F,teta,'o-',color="red", label="peso - teta")
-plt.plot(x_B, y_B, color="green", linewidth="4", label="retta interpolata")
+plt.plot(r.best_x, r.best_y, color="green", linewidth="4", label="retta interpolata")
+plt.errorbar(r.X,r.Y,fmt='o',yerr=r.sigmay, ecolor='black', capsize=5, color="red", label="peso - teta")
 plt.legend()
-plt.xticks(F)
+plt.xticks(r.X)
 plt.show()
 
-print("deltaA/A", deltaB / B)
+K = 1 / r.B
+deltaK = (r.sigmaB / (r.B ** 2))
 
-K = 1 / B
-deltaK = (deltaB / (B ** 2))
 print(K, deltaK)
-
-
-# k_tanti = (m*9.81)/teta
-# k = np.mean(k_tanti)
-# delta_k = np.std(k_tanti)
-
-# print("costante torsione: ",k)
-# print("deviazione: ",delta_k)
-
-
-# forze = k * teta
-
-# CONSTANTE_DIELETTRICA_ASSOLUTA = (k*(72/180)*np.pi*0.01)/(4*np.pi*np.power(0.017,2)*np.power(6000,2))
-# print("CONSTANTE_DIELETTRICA_ASSOLUTA: ",CONSTANTE_DIELETTRICA_ASSOLUTA)
-
-
-
