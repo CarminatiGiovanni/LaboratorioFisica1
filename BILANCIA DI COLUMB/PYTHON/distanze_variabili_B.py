@@ -26,12 +26,12 @@ x = 1/(distanze**2)
 
 r = RettaInterpolata(x, tetaRadConCorrezione, (1/180)*np.pi,'BX')
 
-plt.title("$1/d^2$ - $\\bar{\\theta}$ (rad)")
+plt.title("$1/d^2$ ($m^{-2}$) - $\\bar{\\theta}$ (rad)")
 plt.plot(r.best_x, r.best_y, color="red", label="retta interpolata", linewidth="3")
 plt.errorbar(x, tetaRadConCorrezione,yerr=r.sigmay,ecolor='black',capsize=5,fmt='o', color="blue", label="distanze - angoli corretti")
 plt.xticks(x, rotation=40)
-plt.xlabel("$1/d^2$")
-plt.ylabel("$\\bar{\\theta}$")
+plt.xlabel("$1/d^2 \quad (m^{-2})$")
+plt.ylabel("$\\bar{\\theta} \quad (rad)$")
 plt.legend()
 plt.show()
 

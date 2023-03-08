@@ -22,14 +22,25 @@ F = m * 9.81
 
 r = RettaInterpolata(F,teta,(1/180)*np.pi,'BX')
 
-plt.title("peso (N) - teta (rad) \nTORSIONE")
+plt.title("$F_{peso}$ (N) - $\\bar{\\theta}$ (rad) \nTORSIONE")
 plt.plot(r.best_x, r.best_y, color="green", linewidth="4", label="retta interpolata")
-plt.errorbar(r.X,r.Y,fmt='o',yerr=r.sigmay, ecolor='black', capsize=5, color="red", label="peso - teta")
+plt.errorbar(r.X,r.Y,fmt='o',yerr=r.sigmay, ecolor='black', capsize=5, color="red", label="dati sperimentali")
 plt.legend()
-plt.xticks(r.X)
+#plt.xticks(r.X, rotation=40)
+plt.xlabel("$F_{peso}$ (N)")
+plt.ylabel("$\\bar{\\theta}$ (rad)")
 plt.show()
 
 K = 1 / r.B
-deltaK = (r.sigmaB / (r.B ** 2))
+sigmaK = r.sigmaB / (r.B ** 2)
 
-print(K, deltaK)
+print(f"""
+    B: {r.B}
+    sigmaB: {r.sigmaB}
+    sigmay: {r.sigmay}
+    chi: {r.chiquadro_osservato}
+    chi rid: {r.chiquadro_osservato_ridotto}
+    df: {r.df}
+    K: {K}
+    sigmaK: {sigmaK}
+""")
