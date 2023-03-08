@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import scipy.stats as sc
 from matplotlib import pyplot as plt
+from interpolazione import RettaInterpolata
 from B import calcB, calcSigmaB, calcSigmaY_y_Bx, chiquadro_retta_interpolata
 
 import os
@@ -32,29 +33,25 @@ teta_variabile = (teta_variabile/180)*np.pi
 V_times_V = np.concatenate([v_variabile, v_fissa])
 thetas = np.concatenate([teta_variabile, teta_fissa])
 
-B = calcB(V_times_V, thetas)
-sigmaB = calcSigmaB(V_times_V, thetas)
-sigmaY = np.sqrt(((1 / 180) * np.pi) ** 2 + calcSigmaY_y_Bx(V_times_V, thetas) ** 2)
-chisquare = chiquadro_retta_interpolata(thetas, B*V_times_V, sigmaY, 1)
-
-x_B = np.linspace(min(V_times_V), max(V_times_V), 100)
-y_B = B * x_B
+r = RettaInterpolata(V_times_V,thetas,(1/180)*np.pi,'BX')
 
 plt.title("PARTE A: ($V_1V_2$ - $\\bar{\\theta}$)")
-plt.plot(x_B, y_B, color="#ab11f2", linewidth="3", label="retta interpolata")
-plt.errorbar(v_fissa, teta_fissa, fmt='o', yerr=sigmaY, color="brown", label="A.1", ecolor='black', capsize=5)
-plt.errorbar(v_variabile, teta_variabile, fmt='o', yerr=sigmaY, color="grey", label="A.2", ecolor='black', capsize=5)
+plt.plot(r.best_x, r.best_y, color="#ab11f2", linewidth="3", label="retta interpolata")
+plt.errorbar(v_fissa, teta_fissa, fmt='o', yerr=r.sigmay, color="brown", label="A.1", ecolor='black', capsize=5)
+plt.errorbar(v_variabile, teta_variabile, fmt='o', yerr=r.sigmay, color="grey", label="A.2", ecolor='black', capsize=5)
 plt.xlabel('$V_1V_2 \quad (V)$')
 plt.ylabel("$\\bar{\\theta}\quad (rad)$")
 plt.legend()
 plt.show()
 
 print(f"""
-    B: {B}
-    sigmaB: {sigmaB}
-    sigmaY: {sigmaY}
+    B: {r.B}
+    sigmaB: {r.sigmaB}
+    sigmaY: {r.sigmay}
     
-    chiquadro_ridotto: {chisquare}
+    chiquadro: {r.chiquadro_osservato}
+    chiquadro ridotto: {r.chiquadro_osservato_ridotto}
+    df: {r.df}
 """)
 
 
