@@ -48,7 +48,7 @@ plt.xlabel("$t_{caduta}$ (s)")
 plt.legend()
 plt.title("Misurazione sfera in caduta nella glicerina\n$\\bf{t_{caduta} = " + str(VALORE) + " s}$\n")
 plt.tight_layout()
-# plt.show()
+plt.show()
 
 print(f"""
     media: {media}

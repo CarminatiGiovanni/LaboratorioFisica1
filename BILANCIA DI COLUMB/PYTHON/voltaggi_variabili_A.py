@@ -1,48 +1,60 @@
 import numpy as np
 import pandas as pd
+import scipy.stats as sc
 from matplotlib import pyplot as plt
-from B import calcB,calcDeltaB
+from B import calcB, calcSigmaB, calcSigmaY_y_Bx, chiquadro_retta_interpolata
 
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-FILE_V_UGUALE = dir_path + '/../CSV/' + "d_cost_v1_cost_A2.csv"
-FILE_V_VARIABILE = dir_path + '/../CSV/' + "d_cost_v1_eq_v2_A1.csv"
+FILE_V1_COST_A2 = dir_path + '/../CSV/' + "d_cost_v1_cost_A2.csv"
+FILE_V_EQ_A1 = dir_path + '/../CSV/' + "d_cost_v1_eq_v2_A1.csv"
 
-fr1 = pd.read_csv(FILE_V_UGUALE)  # fileread
-fr2 = pd.read_csv(FILE_V_VARIABILE)
+fr1 = pd.read_csv(FILE_V_EQ_A1)
+fr2 = pd.read_csv(FILE_V1_COST_A2)
 
 V_fissa = np.array(fr1["V"])
 teta1 = np.array(fr1["teta1"])
 teta2 = np.array(fr1["teta2"])
 teta3 = np.array(fr1["teta3"])
-v_fissa = (V_fissa*1000) ** 2 # considero il prodotto delle cariche
-teta_fissa = np.array([round(np.average([teta1[i],teta2[i],teta3[i]]),0) for i in range(0,len(teta1))],dtype=np.int16)
+v_fissa = (V_fissa*1000) ** 2  # considero il prodotto delle cariche
+teta_fissa = np.array([round(np.average([teta1[i], teta2[i], teta3[i]]), 0) for i in range(0, len(teta1))], dtype=np.float_)
 teta_fissa = (teta_fissa/180)*np.pi
-
 
 v_variabile = np.array(fr2["V2"])
 teta1 = np.array(fr2["teta1"])
 teta2 = np.array(fr2["teta2"])
 teta3 = np.array(fr2["teta3"])
-v_variabile = v_variabile * 1000 * 6000 # la seconda carica aveva valore fisso 6kV
-teta_variabile = np.array([round(np.average([teta1[i],teta2[i],teta3[i]]),0) for i in range(0,len(teta1))],dtype=np.int16)
+v_variabile = v_variabile * 1000 * 6000  # la seconda carica aveva valore fisso 6kV
+teta_variabile = np.array([round(np.average([teta1[i], teta2[i], teta3[i]]), 0) for i in range(0, len(teta1))], dtype=np.float_)
 teta_variabile = (teta_variabile/180)*np.pi
 
-todosX = np.concatenate([v_variabile,v_fissa])
-todosY = np.concatenate([teta_variabile,teta_fissa])
-B = calcB(todosX, todosY)
-deltaB = calcDeltaB(todosX, todosY)
-print(B, deltaB)
+V_times_V = np.concatenate([v_variabile, v_fissa])
+thetas = np.concatenate([teta_variabile, teta_fissa])
 
-x_B = np.linspace(min(todosX), max(todosX), 100)
+B = calcB(V_times_V, thetas)
+sigmaB = calcSigmaB(V_times_V, thetas)
+sigmaY = np.sqrt(((1 / 180) * np.pi) ** 2 + calcSigmaY_y_Bx(V_times_V, thetas) ** 2)
+chisquare = chiquadro_retta_interpolata(thetas, B*V_times_V, sigmaY, 1)
+
+x_B = np.linspace(min(V_times_V), max(V_times_V), 100)
 y_B = B * x_B
 
-plt.title("prodotto Volt - teta(rad)")
-plt.plot(v_fissa,teta_fissa,'o-', color ="brown", label="cariche uguali")
-plt.plot(v_variabile,teta_variabile,'o-', color = "grey", label="cariche diverse")
-plt.plot(x_B, y_B, color="#ab11f2", linewidth="4", label="retta interpolata")
+plt.title("PARTE A: ($V_1V_2$ - $\\bar{\\theta}$)")
+plt.plot(x_B, y_B, color="#ab11f2", linewidth="3", label="retta interpolata")
+plt.errorbar(v_fissa, teta_fissa, fmt='o', yerr=sigmaY, color="brown", label="A.1", ecolor='black', capsize=5)
+plt.errorbar(v_variabile, teta_variabile, fmt='o', yerr=sigmaY, color="grey", label="A.2", ecolor='black', capsize=5)
+plt.xlabel('$V_1V_2 \quad (V)$')
+plt.ylabel("$\\bar{\\theta}\quad (rad)$")
 plt.legend()
 plt.show()
+
+print(f"""
+    B: {B}
+    sigmaB: {sigmaB}
+    sigmaY: {sigmaY}
+    
+    chiquadro_ridotto: {chisquare}
+""")
 
 
