@@ -1,9 +1,7 @@
 import numpy as np
 import pandas as pd
-import scipy.stats as sc
 from matplotlib import pyplot as plt
 from interpolazione import RettaInterpolata
-from B import calcB, calcSigmaB, calcSigmaY_y_Bx, chiquadro_retta_interpolata
 
 import os
 

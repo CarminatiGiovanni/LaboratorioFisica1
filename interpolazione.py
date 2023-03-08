@@ -39,7 +39,7 @@ class RettaInterpolata():
         return self.N*np.sum(self.X**2)-np.power(self.X.sum(),2)
     
     def __calcB(self) -> float:
-        return (self.N*np.sum(self.X*self.Y) - self.X.sum() * self.Y.sum())/self.delta()
+        return (self.N*np.sum(self.X*self.Y) - self.X.sum() * self.Y.sum()) / self.delta
     
     def __calcA(self) -> float:
         return ((self.X**2).sum()*self.Y.sum() - self.X.sum()*(self.Y*self.X).sum()) / self.delta
@@ -61,8 +61,3 @@ class RettaInterpolata():
             return np.sum(((self.Y - self.B*self.X)/self.sigmay)**2)
         if self.relazione == 'A+BX':
             return np.sum(((self.Y - self.A - self.B*self.X)/self.sigmay)**2)
-    
-
-    
-
-    
