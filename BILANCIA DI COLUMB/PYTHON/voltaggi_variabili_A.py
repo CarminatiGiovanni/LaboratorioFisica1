@@ -6,8 +6,8 @@ from B import calcB,calcDeltaB
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-FILE_V_UGUALE = dir_path + '/../CSV/' + "d_fissa_v_uguale_per_ogni_carica.csv"
-FILE_V_VARIABILE = dir_path + '/../CSV/' + "d_fissa_v_diversa.csv"
+FILE_V_UGUALE = dir_path + '/../CSV/' + "d_cost_v1_cost_A2.csv"
+FILE_V_VARIABILE = dir_path + '/../CSV/' + "d_cost_v1_eq_v2_A1.csv"
 
 fr1 = pd.read_csv(FILE_V_UGUALE)  # fileread
 fr2 = pd.read_csv(FILE_V_VARIABILE)
