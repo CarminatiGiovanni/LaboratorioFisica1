@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 from typing import Final
-from B import calcB, calcSigmaB, calcSigmaY_y_A_BX, calcSigmaA, calcA
+from PYTHON.B import calcB, calcSigmaB, calcSigmaY_y_A_BX, calcSigmaA, calcA
 # from B import calcB, calcDeltaB
 
 import os
