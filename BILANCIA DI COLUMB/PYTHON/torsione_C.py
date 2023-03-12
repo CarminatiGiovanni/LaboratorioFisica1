@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from interpolazione import RettaInterpolata
+from tests.interpolazione_vecchio import RettaInterpolata
 
 import os
 
