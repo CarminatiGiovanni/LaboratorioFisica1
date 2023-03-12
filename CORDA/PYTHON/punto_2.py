@@ -21,7 +21,7 @@ f2 = np.array(fr['f2']) # Hz
 ERRORE_SENSIBILITA_OSCILLOSCOPIO = 1
 
 print(f2)
- plt.plot(masse,f2,'o-')
+plt.plot(masse,f2,'o-')
 B = calcB(masse,f2)
 A = calcA(masse,f2)
 sigmaB = calcSigmaB(masse,f2)
@@ -29,8 +29,7 @@ sigmaA = calcSigmaA(masse,f2)
 sigmay = np.sqrt(np.sum((f2 - B*masse - A)**2)/3)
 print(sigmay)
 sigmay = np.sqrt(sigmay**2 + ERRORE_SENSIBILITA_OSCILLOSCOPIO**2)
-
- sprint(sc.chisquare(f2,B * masse, ddof=1))
+print(sc.chisquare(f2,B * masse, ddof=1))
 
 x = np.linspace(min(masse),max(masse),100)
 y = B * x + A

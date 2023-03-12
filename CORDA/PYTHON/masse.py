@@ -3,7 +3,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from typing import Final
 import scipy.stats as sc
-from PYTHON.B import calcB, calcSigmaB, calcSigmaY_y_A_BX, calcA, calcSigmaA
+from B import calcB, calcSigmaB, calcSigmaY_y_A_BX, calcA, calcSigmaA
 
 import os
 

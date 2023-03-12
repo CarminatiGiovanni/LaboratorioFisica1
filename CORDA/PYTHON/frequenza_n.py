@@ -36,7 +36,7 @@ ERRORE_SNSIBILITA_OSCILLOSCOPIO = 1
     # print(sc.chisquare(i,B*n_armonica + A,ddof=1))
 
     # plt.plot(x,y)
-     plt.errorbar(n_armonica,i, yerr=sigmay, fmt='o', ecolor='black', color="red", capsize=10)
+# plt.errorbar(n_armonica,i, yerr=sigmay, fmt='o', ecolor='black', color="red", capsize=10)
 
 # for i in range(0,4):
 
