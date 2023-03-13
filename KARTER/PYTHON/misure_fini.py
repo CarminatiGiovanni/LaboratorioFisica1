@@ -9,15 +9,16 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 FILE = dir_path + '/../CSV/' + 'misure_fini.csv'
 fr = pd.read_csv(FILE)
 
-l = (np.array(fr['d']) + 15) * 0.01
+l = (np.array(fr['d'])) * 0.01
 l = np.sqrt(l)
 periodo1 = np.array(fr["AVG t"])
 periodo2 = np.array(fr["AVG T"])
 print(periodo1)
 print(periodo2)
 
-r1 = RettaInterpolata(l,periodo1,0.002)
-r2 = RettaInterpolata(l,periodo2,0.002)
+#TODO: errori con correzione di bessel
+r1 = RettaInterpolata(l,periodo1,0.00025)
+r2 = RettaInterpolata(l,periodo2,0.00015)
 
 plt.plot(r1.best_x,r1.best_y,label="1000g su")
 plt.plot(r2.best_x,r2.best_y,label="1000g giu")
@@ -28,5 +29,5 @@ print(r1)
 print(r2)
 
 plt.legend()
-plt.xticks(l)
+plt.xticks(np.round(l,4))
 plt.show()
