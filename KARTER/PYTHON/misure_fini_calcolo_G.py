@@ -11,6 +11,20 @@ fr = pd.read_csv(FILE)
 
 l = (np.array(fr['d'])) * 0.01
 l = np.sqrt(l)
+
+t1 =np.array(fr["t1"])
+t2 =np.array(fr["t2"])
+t3 =np.array(fr["t3"])
+t4 =np.array(fr["t4"])
+
+
+
+
+
+
+
+
+
 periodo1 = np.array(fr["AVG t"])
 periodo2 = np.array(fr["AVG T"])
 print(periodo1)
