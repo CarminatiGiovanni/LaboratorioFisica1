@@ -9,25 +9,15 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 FILE = dir_path + '/../CSV/' + 'misure_fini.csv'
 fr = pd.read_csv(FILE)
 
-d = (np.array(fr['d']))# * 0.01
-print(d)
-d = np.sqrt(d)
-t1 = np.array(fr['t1'])
-t2 = np.array(fr['t2'])
-t3 = np.array(fr['t3'])
-t4 = np.array(fr['t4'])
-T1 = np.array(fr['T1'])
-T2 = np.array(fr['T2'])
-T3 = np.array(fr['T3'])
-T4 = np.array(fr['T4'])
-
-periodo1 = np.array([round(np.average([t1[i],t2[i],t3[i],t4[i]]),4) for i in range(0,len(d))])
-periodo2 = np.array([round(np.average([T1[i],T2[i],T3[i],T4[i]]),4) for i in range(0,len(d))])
+l = (np.array(fr['d']) + 15) * 0.01
+l = np.sqrt(l)
+periodo1 = np.array(fr["AVG t"])
+periodo2 = np.array(fr["AVG T"])
 print(periodo1)
 print(periodo2)
 
-r1 = RettaInterpolata(d,periodo1,0.003)
-r2 = RettaInterpolata(d,periodo2,0.003)
+r1 = RettaInterpolata(l,periodo1,0.002)
+r2 = RettaInterpolata(l,periodo2,0.002)
 
 plt.plot(r1.best_x,r1.best_y,label="1000g su")
 plt.plot(r2.best_x,r2.best_y,label="1000g giu")
@@ -38,5 +28,5 @@ print(r1)
 print(r2)
 
 plt.legend()
-plt.xticks(d)
+plt.xticks(l)
 plt.show()
