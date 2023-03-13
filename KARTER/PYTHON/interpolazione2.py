@@ -12,7 +12,7 @@ class RettaInterpolata():
         self.N = len(X)
         self.delta = self.__calcDelta()
         self.B = self.__calcB()
-        self.best_x = np.linspace(min(self.X), max(self.X), 100)
+        self.best_x = np.linspace(min(self.X), max(self.X) + 0.04, 100)
         self.A = self.__calcA()
         self.sigmaY = self.__calcSigmaY_A_BX()
         self.sigmaY = np.sqrt(self.sigmaY**2 + sigmaY_strumento**2) # propaga errore
