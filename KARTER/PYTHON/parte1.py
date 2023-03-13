@@ -14,8 +14,11 @@ ERRORE_SENSIBILITA_OSCILLOSCOPIO = 1 #
 fr_su = pd.read_csv(FILE_su)  # fileread
 fr_giu = pd.read_csv(FILE_giu) 
 
-d_su = np.array(fr_su["h (cm) (massa 1.4kg)"]) * 0.01
-d_giu = np.array(fr_giu["h (cm) (massa 1.4kg)"]) * 0.01
+d_su = (np.array(fr_su["h (cm) (massa 1.4kg)"]) + 5) * 0.01
+d_giu = (np.array(fr_giu["h (cm) (massa 1.4kg)"]) + 5) * 0.01
+# d_su = np.sqrt(d_su)
+# d_giu = np.sqrt(d_giu)
+
 t1 = np.array(fr_su["t1"])
 t2 = np.array(fr_su["t2"])
 t3 = np.array(fr_su["t3"])
