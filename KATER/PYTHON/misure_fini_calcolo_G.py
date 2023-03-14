@@ -9,25 +9,37 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 FILE = dir_path + '/../CSV/' + 'misure_fini.csv'
 fr = pd.read_csv(FILE)
 
-l = (np.array(fr['d'])) * 0.01
-l = np.sqrt(l)
+h1 = (np.array(fr['d'])) * 0.01
+h1 = np.sqrt(h1)
+
+def dev_std(a: np.ndarray) -> np.float64:
+    mean = np.mean(a)
+    return np.sqrt((np.sum(((a - mean)**2))/(len(a)-1)))/np.sqrt(len(a))
 
 t1 =np.array(fr["t1"])
 t2 =np.array(fr["t2"])
 t3 =np.array(fr["t3"])
 t4 =np.array(fr["t4"])
+T1 =np.array(fr["T1"])
+T2 =np.array(fr["T2"])
+T3 =np.array(fr["T3"])
+T4 =np.array(fr["T4"])
+
+dev_stdt = np.array([dev_std(np.array([t1[i],t2[i],t3[i],t4[i]])) for i in range(0,len(h1))])
+dev_stdT = np.array([dev_std(np.array([T1[i],T2[i],T3[i],T4[i]])) for i in range(0,len(h1))])
+dev_stdt = np.mean(dev_stdt)
+dev_stdT = np.mean(dev_stdT)
 
 periodo1 = np.array(fr["AVG t"])
 periodo2 = np.array(fr["AVG T"])
 print(periodo1)
 print(periodo2)
 
-#TODO: errori con correzione di bessel
-r1 = RettaInterpolata(l,periodo1)
-r2 = RettaInterpolata(l,periodo2)
+r1 = RettaInterpolata(h1,periodo1, dev_stdt)
+r2 = RettaInterpolata(h1,periodo2, dev_stdT)
 
-plt.plot(r1.best_x,r1.best_y,label="1000g su")
-plt.plot(r2.best_x,r2.best_y,label="1000g giu")
+plt.plot(r1.best_x,r1.best_y,label="$coltello_1$")
+plt.plot(r2.best_x,r2.best_y,label="$coltello_2$")
 plt.errorbar(r1.X,r1.Y,fmt='o',yerr=r1.sigmaY,color="red",ecolor="black",capsize=5)
 plt.errorbar(r2.X,r2.Y,fmt='o',yerr=r2.sigmaY,color="red",ecolor="black",capsize=5)
 
@@ -35,7 +47,10 @@ print(r1)
 print(r2)
 
 plt.legend()
-plt.xticks(np.round(l,4))
+plt.title("intorno nel punto di intersezione delle parabole (circa 10cm)\n")
+plt.xticks(np.round(h1,3))
+plt.ylabel('$T (s)$')
+plt.xlabel("$\sqrt{h_1}\quad(\sqrt{m})$")
 plt.show()
 
 
@@ -60,7 +75,6 @@ T1 = A1 + B1*((A2-A1)/(B1-B2))
 T1 = np.round(T1,2) # 2.00
 
 x = (A2-A1)/(B1-B2)
-l = x**2 + 0.15
 
 D = 0.994
 
