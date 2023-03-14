@@ -37,9 +37,13 @@ sigmayy = np.mean(sigmaY_propagati)
 
 
 r = RettaInterpolata(h,t**2, sigmayy)
-# plt.plot(r.best_x,r.best_y)
-# plt.errorbar(r.X,r.Y,fmt='o',yerr=r.sigmaY,color="red",ecolor="black",capsize=5)
-# plt.show()
+plt.title("interpolazione $h_1$ - t^{2}")
+plt.plot(r.best_x,r.best_y)
+plt.errorbar(r.X,r.Y,fmt='o',yerr=r.sigmaY,color="red",ecolor="black",capsize=5)
+plt.xticks(np.round(h,2))
+plt.xlabel('$h_1\quad(m)$')
+plt.ylabel('$t^{2}\quad(s)$')
+plt.show()
 
 
 g = 2/r.B
