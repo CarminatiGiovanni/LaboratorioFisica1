@@ -62,7 +62,7 @@ class RettaInterpolata():
         return np.sum(((self.Y - self.B*self.X)/self.sigmaY)**2) if self.t_test else np.sum(((self.Y - self.A - self.B*self.X)/self.sigmaY)**2)
     
     def __t_test(self) -> bool:
-        return 0>= self.A - 2*self.sigmaA and 0 <= self.A + 2*self.sigmaA
+        return 0>= self.A - 2*self.sigmaA.all() and 0 <= self.A + 2*self.sigmaA.all()
     
     def __repr__(self) -> str:
         a = f"A: {self.A}\nsigmaA: {self.sigmaA}" if not self.t_test else ""
