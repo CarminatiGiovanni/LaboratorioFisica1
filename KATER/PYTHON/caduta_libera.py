@@ -13,7 +13,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 FILE = dir_path + '/../CSV/' + 'caduta_libera.csv'
 fr = pd.read_csv(FILE)
 
-h = np.array(fr['h'])*0.01
+h = np.array(fr['h'])*0.01 + 0.004 + 0.009 - 0.016
 t = np.array(fr['AVG t']) * 0.001
 
 columns = list(fr.columns[1:11])
