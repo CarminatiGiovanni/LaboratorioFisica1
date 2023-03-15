@@ -36,15 +36,16 @@ sigmayy = np.mean(sigmaY_propagati)
 # plt.show()
 
 
-r = RettaInterpolata(h,t**2, sigmayy)
-plt.title("interpolazione $h_1$ - t^{2}")
+#r = RettaInterpolata(h,t**2, sigmayy)
+r = RettaInterpolata(h,t**2)
+print(r)
+plt.title("interpolazione $h_1 - t^{2}$")
 plt.plot(r.best_x,r.best_y)
 plt.errorbar(r.X,r.Y,fmt='o',yerr=r.sigmaY,color="red",ecolor="black",capsize=5)
 plt.xticks(np.round(h,2))
 plt.xlabel('$h_1\quad(m)$')
 plt.ylabel('$t^{2}\quad(s)$')
 plt.show()
-
 
 g = 2/r.B
 sigmag = g * (r.sigmaB / r.B)

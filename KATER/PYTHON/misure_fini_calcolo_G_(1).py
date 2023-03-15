@@ -79,7 +79,6 @@ x = (A2-A1)/(B1-B2)
 D = 0.994
 
 g = 4*np.power(np.pi,2)*D/(T1**2)
-print(g)
 
 sigmaA1A2 = np.sqrt(sigmaA1**2+sigmaA2**2)
 sigmaB1B2 = np.sqrt(sigmaB1**2+sigmaB2**2)
@@ -89,4 +88,5 @@ sigmaProdotto = np.sqrt((sigmax/x)**2 + (sigmaB1/B1)**2) * B1 * x
 sigmaT = np.sqrt(sigmaProdotto**2+sigmaA1**2)
 sigmag = T1 * 2 * (sigmaT/T1)
 
-print(sigmag)
+print("T: ",np.round(T1,2),"±",np.round(sigmaT,2))
+print("g: ",np.round(g,2),"±",np.round(sigmag,2))
