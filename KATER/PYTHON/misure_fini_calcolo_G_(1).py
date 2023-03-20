@@ -10,7 +10,7 @@ FILE = dir_path + '/../CSV/' + 'misure_fini.csv'
 fr = pd.read_csv(FILE)
 
 h1 = (np.array(fr['d'])) * 0.01
-h1 = np.sqrt(h1)
+#h1 = np.sqrt(h1)
 
 def dev_std(a: np.ndarray) -> np.float64:
     mean = np.mean(a)
@@ -86,7 +86,28 @@ sigmaB1B2 = np.sqrt(sigmaB1**2+sigmaB2**2)
 sigmax = np.sqrt((sigmaA1A2/(A2-A1))**2 + (sigmaB1B2/(B1-B2)**2)) * x
 sigmaProdotto = np.sqrt((sigmax/x)**2 + (sigmaB1/B1)**2) * B1 * x
 sigmaT = np.sqrt(sigmaProdotto**2+sigmaA1**2)
-sigmag = T1 * 2 * (sigmaT/T1)
+sigmag = 2 * sigmaT
 
 print("T: ",np.round(T1,2),"±",np.round(sigmaT,2))
 print("g: ",np.round(g,2),"±",np.round(sigmag,2))
+
+
+# print("--------------------------------------")
+
+# T1A = periodo1[6]
+# T1B = periodo1[7]
+# sigma1 = dev_stdt
+# T2A = periodo2[6]
+# T2B = periodo2[7]
+# sigma2 = dev_stdT
+
+# T = (T2A*T1B-T1A*T2B)/(T1B-T2B-T1A+T2A)
+
+
+# pno = T2A*T1B*np.sqrt((sigma2/T2A)**2+(sigma1/T1B)**2)
+# pne = T1A*T2B*np.sqrt((sigma2/T2B)**2+(sigma1/T1A)**2)
+# pn = np.sqrt(pno**2+pne**2)
+# ps = np.sqrt(2*sigma1**2+2*sigma2**2)
+# sigmaT = T*np.sqrt((pn/(T2A*T1B-T1A*T2B))**2 + (ps/(T1B-T2B-T1A+T2A))**2)
+# print(sigmaT)
+# print(4*np.power(np.pi,2)*D/(T*2),2*sigmaT*T)
