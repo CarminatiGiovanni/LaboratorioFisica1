@@ -86,7 +86,7 @@ sigmaB1B2 = np.sqrt(sigmaB1**2+sigmaB2**2)
 sigmax = np.sqrt((sigmaA1A2/(A2-A1))**2 + (sigmaB1B2/(B1-B2)**2)) * x
 sigmaProdotto = np.sqrt((sigmax/x)**2 + (sigmaB1/B1)**2) * B1 * x
 sigmaT = np.sqrt(sigmaProdotto**2+sigmaA1**2)
-sigmag = 2 * sigmaT
+sigmag = 2 * sigmaT * T1
 
 print("T: ",np.round(T1,2),"±",np.round(sigmaT,2))
 print("g: ",np.round(g,2),"±",np.round(sigmag,2))
