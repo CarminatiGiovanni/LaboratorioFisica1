@@ -3,7 +3,10 @@ T_ice = -17 + 273.15 # °K
 T_fus = 273.15 # °k
 m_ice = 0.05 # kg
 m_h20 = 0.3 # kg
-me = 0.014
+
+
+me_200 = 0.014 # massa equivalente per 200g di h20
+me = me_200 * 0.3 / 0.2 # massa equivalente per 300g di h20
 Te = 57.5 + 273.15 # °K
 c_ice = 2051
 c_h20 = 4181
