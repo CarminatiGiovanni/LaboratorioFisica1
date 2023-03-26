@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from interpolazione2 import RettaInterpolata
 
-T = np.array([21.5,22,22.5,23,23.5,24,24.5,25,26,27,28,29.5,30.5,32,34,35.5,37,39,40.5,43,45])
+T = np.array([21.5,22,22.5,23,23.5,24,24.5,25,26,27,28,29.5,30.5,32,34,35.5])
 t = np.arange(0,21*60,60)
 
 
@@ -11,7 +11,7 @@ r = RettaInterpolata(t[:misure_buone],T[:misure_buone],0.5)
 
 plt.errorbar(r.X,r.Y,fmt='o',yerr=r.sigmaY,ecolor='black',capsize=5,color='red')
 plt.plot(r.best_x,r.best_y)
-# plt.show()
+plt.show()
 
 print(r)
 
