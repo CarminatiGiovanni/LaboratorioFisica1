@@ -4,9 +4,12 @@ from numpy import ndarray, float64
 class RettaInterpolata():
     def __init__(self, X: ndarray[float64], Y: ndarray[float64], sigmaY_strumento: ndarray[float64] | float64 = 0) -> None:
         if len(X) != len(Y):
-            raise("len(X) deve essere uguale len(Y)")
+            raise Exception("len(X) deve essere uguale len(Y)")
         if type(sigmaY_strumento) == type(ndarray) and len(sigmaY_strumento) != len(X):
-            raise("Se per ogni valore c'è un sigmaY_strumento differente len(sigmaY) deve essere uguale a len(X)")
+            raise Exception("Se per ogni valore c'è un sigmaY_strumento differente len(sigmaY) deve essere uguale a len(X)")
+        if len(X) < 3:
+            raise Exception("Error len must be at least 2")
+        
         self.X = X
         self.Y = Y
         self.N = len(X)
