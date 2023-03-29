@@ -17,19 +17,19 @@ class RettaInterpolata():
         self.sigmaY = self.__calcSigmaY_A_BX()
         self.sigmaY = np.sqrt(self.sigmaY**2 + sigmaY_strumento**2) # propaga errore
         self.sigmaA = self.__calcSigmaA()
-        self.t_test = self.__t_test()
-        self.linearita = 'BX' if self.t_test else 'A+BX'
+        #self.t_test = self.__t_test()
+        #self.linearita = 'BX' if self.t_test else 'A+BX'
 
-        if self.t_test:
-            self.sigmaY = self.__calcSigmaY_BX() # ricalcola sigmaY
-            self.sigmaY = np.sqrt(self.sigmaY**2 + sigmaY_strumento**2)
+        # if self.t_test:
+        #     self.sigmaY = self.__calcSigmaY_BX() # ricalcola sigmaY
+        #     self.sigmaY = np.sqrt(self.sigmaY**2 + sigmaY_strumento**2)
 
-            self.best_y = self.B*self.best_x
-            self.ddof = 1
-        else:
-            self.A = self.__calcA()
-            self.best_y = self.B*self.best_x + self.A
-            self.ddof = 2
+        #     self.best_y = self.B*self.best_x
+        #     self.ddof = 1
+        # else:
+        self.A = self.__calcA()
+        self.best_y = self.B*self.best_x + self.A
+        self.ddof = 2
 
         self.sigmaB = self.__calcSigmaB()
         self.df = self.N - self.ddof # gradi di libertà
@@ -59,15 +59,15 @@ class RettaInterpolata():
         return np.sqrt(np.sum(self.X ** 2) / self.delta) * self.sigmaY
     
     def __chiquadro(self) -> float64:
-        return np.sum(((self.Y - self.B*self.X)/self.sigmaY)**2) if self.t_test else np.sum(((self.Y - self.A - self.B*self.X)/self.sigmaY)**2)
+        return np.sum(((self.Y - self.A - self.B*self.X)/self.sigmaY)**2)# if self.t_test else np.sum(((self.Y - self.A - self.B*self.X)/self.sigmaY)**2)
     
     def __t_test(self) -> bool:
         return 0>= self.A - 2*self.sigmaA.all() and 0 <= self.A + 2*self.sigmaA.all()
     
     def __repr__(self) -> str:
-        a = f"A: {self.A}\nsigmaA: {self.sigmaA}" if not self.t_test else ""
+        a = f"A: {self.A}\nsigmaA: {self.sigmaA}" #if not self.t_test else ""
         return f"""
-linearità: {self.linearita}
+linearità: 
 B: {self.B}
 sigmaB: {self.sigmaB}
 {a}
