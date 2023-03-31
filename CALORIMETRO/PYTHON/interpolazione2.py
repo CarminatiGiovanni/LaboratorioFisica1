@@ -82,10 +82,22 @@ gradi di libertà: {self.df}
 vincoli: {self.ddof}
         """
     
+
+def parseResult(x: float64,sigmaX: float64,decimals: int = 0, exponent: int = 1) -> str:
+    if decimals < 0: raise Exception("il numero di ciffre decimali non può essere negativo")
+    x = x * np.power(float(10),-exponent)
+    sigmaX = sigmaX * np.power(float(10),-exponent)
+    x = np.round(x, decimals)
+    sigmaX = np.round(sigmaX,decimals)
+    exponent = f'+{exponent}' if exponent > 0 else exponent
+    return f"{x}e{exponent} ± {sigmaX}e{exponent}"
+    
 def main():
     X,Y = np.array([1,2,3,4]), np.array([1,2,4,4])
     r = RettaInterpolata(X,Y)
     print(r)
+
+    print(parseResult(57349,5352,2,3))
 
 
 if __name__ == '__main__':
