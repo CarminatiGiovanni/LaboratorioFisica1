@@ -95,7 +95,12 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
 
     X,Y = np.array([1,2,3,4,5,6,7,8], dtype=float64), np.array([1,2,4,4,7,9,10,12],dtype=float64)
-    r = RettaInterpolata(X,Y)
+    #r = RettaInterpolata(X,Y)
+    
+    def ret(x,A,B):
+        return A + B*x
+    
+    r = Interpolazione(X,Y,ret)
     plt.errorbar(X,Y,fmt='o', yerr=r.sigmaY, capsize=7, color='red', ecolor='black')
     plt.plot(r.x_best,r.y_best)
     plt.show()
@@ -107,7 +112,7 @@ if __name__ == '__main__':
     X,Y = np.array([1,2,3,4,5,6,7,8], dtype=float64), np.array([1,3,10,15,28,33,45,64],dtype=float64)
 
     r = Interpolazione(X,Y,f,names=['a','b','c'])
-    print(r)
+    # print(r)
     plt.errorbar(X,Y,fmt='o', yerr=r.sigmaY, capsize=7, color='red', ecolor='black')
     plt.plot(r.x_best,r.y_best)
     plt.show()
