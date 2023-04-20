@@ -5,8 +5,6 @@ from matplotlib import pyplot as plt
 import scipy.stats as sc
 import os
 
-Array = np.array
-
 dir_path = os.path.dirname(os.path.realpath(__file__))
 FILE = dir_path + '/../CSV/' + 'T=24.5°C 100 misure d=10cm.csv'
 
@@ -34,8 +32,8 @@ plt.figure("Analisi dati raccolti")  # da il nome al pannello
 plt.hist(data, bins=bins, density=True, label='data', color="#89c4ff", edgecolor='black')  # disegna istogramma
 plt.xticks(bins[:-1], rotation=45)
 
-x: Array = np.linspace(min_, max_)  # array ad alta densità
-y: Array = sc.norm.pdf(x, media, sigma)  # y della distribuzione normale ad alta densità
+x = np.linspace(min_, max_)  # array ad alta densità
+y = sc.norm.pdf(x, media, sigma)  # y della distribuzione normale ad alta densità
 plt.plot(x, y, label=f"$G(x;\mu,\sigma)$", color="#ff0000", linewidth='4')  # sovrappone al hist la gaussiana
 ""
 description: str = "" + "$\\bar{t}$ = " + str(round(media, 3)) + ", $\sigma$ = " + str(
