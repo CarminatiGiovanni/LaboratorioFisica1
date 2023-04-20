@@ -8,7 +8,7 @@ class RettaInterpolata():
             raise("len(X) deve essere uguale len(Y)")
         if type(sigmaY_strumento) == type(ndarray) and len(sigmaY_strumento) != len(X):
             raise("Se per ogni valore c'è un sigmaY_strumento differente len(sigmaY) deve essere uguale a len(X)")
-        
+
         self.X = X
         self.Y = Y
         self.N = len(X)
@@ -18,7 +18,7 @@ class RettaInterpolata():
         
         AB, sigma = curve_fit(f,X,Y,p0 = [Y[0], (Y[1] - Y[0]) / (X[1] - X[0])])
         self.A, self.B = AB
-        self.sigmaA, self.sigmaB = np.diag(sigma)
+        self.sigmaA, self.sigmaB =  np.sqrt(np.diag(sigma)) # (variance= ^ (1/2)
         self.sigmaY = np.sqrt(self.__sigmaY()**2 + sigmaY_strumento**2)
         self.df = self.N - 2
         self.rchisquare = self.__rchisquare() 
@@ -31,7 +31,7 @@ class RettaInterpolata():
         
     def __rchisquare(self):
         exp_val = self.A + self.B * self.X
-        return np.round(np.sum((self.Y - exp_val)**2 / exp_val) / self.df,2)
+        return np.round(np.sum((self.Y - exp_val)**2 / exp_val) / self.df,5)
 
     def __repr__(self) -> str:
         return f"""
@@ -55,7 +55,6 @@ class Interpolazione:
         self.Y = Y
         self.X = X
         self.N = len(X)
-
         self.bval, self.cov_matrix = curve_fit(f,X,Y,p0=p0)
         self.sigma_bval = np.diag(self.cov_matrix)
 
