@@ -31,7 +31,7 @@ class RettaInterpolata():
         
     def __rchisquare(self):
         exp_val = self.A + self.B * self.X
-        return np.round(np.sum((self.Y - exp_val)**2 / exp_val) / self.df,2)
+        return np.sum((self.Y - exp_val)**2 / exp_val) / self.df
 
     def __repr__(self) -> str:
         return f"""
