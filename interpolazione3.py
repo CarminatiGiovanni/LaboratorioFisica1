@@ -91,28 +91,39 @@ covariance matrix: {self.cov_matrix}
 """
 
 
+def final_val(x,sigma,decimals = 2,exp = 0, udm: str = '') -> str:
+    x = np.round(x*np.power(10,-exp),decimals)
+    sigma = np.round(sigma*np.power(10,-exp),decimals)
+    return f'{x} ± {sigma} {udm}' if exp == 0 else f'({x} ± {sigma})e{exp} {udm}'
+
 if __name__ == '__main__':
-    import matplotlib.pyplot as plt
 
-    X,Y = np.array([1,2,3,4,5,6,7,8], dtype=float64), np.array([1,2,4,4,7,9,10,12],dtype=float64)
-    #r = RettaInterpolata(X,Y)
-    
-    def ret(x,A,B):
-        return A + B*x
-    
-    r = Interpolazione(X,Y,ret)
-    plt.errorbar(X,Y,fmt='o', yerr=r.sigmaY, capsize=7, color='red', ecolor='black')
-    plt.plot(r.x_best,r.y_best)
-    plt.show()
-    print(r)
+    val = 0.51543e-12
+    sigma_val = 1.543e-15
+    print(final_val(val,sigma_val,exp=-14, decimals=3))
 
-    def f(x,a,b,c):
-        return a*x**2 + b*x + c
-    
-    X,Y = np.array([1,2,3,4,5,6,7,8], dtype=float64), np.array([1,3,10,15,28,33,45,64],dtype=float64)
 
-    r = Interpolazione(X,Y,f,names=['a','b','c'])
+    # import matplotlib.pyplot as plt
+
+    # X,Y = np.array([1,2,3,4,5,6,7,8], dtype=float64), np.array([1,2,4,4,7,9,10,12],dtype=float64)
+    # #r = RettaInterpolata(X,Y)
+    
+    # def ret(x,A,B):
+    #     return A + B*x
+    
+    # r = Interpolazione(X,Y,ret)
+    # plt.errorbar(X,Y,fmt='o', yerr=r.sigmaY, capsize=7, color='red', ecolor='black')
+    # plt.plot(r.x_best,r.y_best)
+    # plt.show()
     # print(r)
-    plt.errorbar(X,Y,fmt='o', yerr=r.sigmaY, capsize=7, color='red', ecolor='black')
-    plt.plot(r.x_best,r.y_best)
-    plt.show()
+
+    # def f(x,a,b,c):
+    #     return a*x**2 + b*x + c
+    
+    # X,Y = np.array([1,2,3,4,5,6,7,8], dtype=float64), np.array([1,3,10,15,28,33,45,64],dtype=float64)
+
+    # r = Interpolazione(X,Y,f,names=['a','b','c'])
+    # # print(r)
+    # plt.errorbar(X,Y,fmt='o', yerr=r.sigmaY, capsize=7, color='red', ecolor='black')
+    # plt.plot(r.x_best,r.y_best)
+    # plt.show()
