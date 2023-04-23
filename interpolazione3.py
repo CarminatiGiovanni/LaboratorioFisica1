@@ -46,11 +46,10 @@ df: {self.df}
 covariance matrix: {self.cov_matrix}    
 """
 
-
 class RettaInterpolata(Interpolazione):
     def __init__(self,X,Y,sigmaY_strumento: ndarray[float64] | float64 = 0):
         f = lambda x,A,B : A + B*x
-        super().__init__(X,Y,f,sigmaY_strumento = sigmaY_strumento,names = ['A','B'],p0 = [Y[0], (Y[1] - Y[0]) / (X[1] - X[0])])
+        super().__init__(X,Y,f,sigmaY_strumento = sigmaY_strumento,names = ['A','B'],p0 = [Y[0], (Y[len(Y)-1] - Y[0]) / (X[len(X)-1] - X[0])])
         self.A = self.bval['A']
         self.B = self.bval['B']
         self.sigmaA = self.sigma_bval['A']
@@ -72,7 +71,6 @@ chiquadro ridotto: {self.rchisquare}
 df: {self.df}
     
 """
-
 
 def final_val(x,sigma,decimals = 2,exp = 0, udm: str = '') -> str:
     x = np.round(x*np.power(10,-exp),decimals)
