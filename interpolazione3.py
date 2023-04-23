@@ -1,16 +1,16 @@
 import numpy as np
-from numpy import ndarray, float64
+from numpy import ndarray, float128
 from scipy.optimize import curve_fit
 
 class RettaInterpolata():
-    def __init__(self, X: ndarray[float64], Y: ndarray[float64], sigmaY_strumento: ndarray[float64] | float64 = 0) -> None:
+    def __init__(self, X: ndarray[float128], Y: ndarray[float128], sigmaY_strumento: ndarray[float128] | float128 = 0) -> None:
         if len(X) != len(Y):
             raise("len(X) deve essere uguale len(Y)")
         if type(sigmaY_strumento) == type(ndarray) and len(sigmaY_strumento) != len(X):
             raise("Se per ogni valore c'è un sigmaY_strumento differente len(sigmaY) deve essere uguale a len(X)")
         
-        self.X = X
-        self.Y = Y
+        self.X = X.astype('float128')
+        self.Y = Y.astype('float128')
         self.N = len(X)
 
         def f(x, A, B):
@@ -34,6 +34,9 @@ class RettaInterpolata():
         return np.round(np.sum((self.Y - exp_val)**2 / exp_val) / self.df,2)
 
     def __repr__(self) -> str:
+        return str(self)
+
+    def __str__(self) -> str:
         return f"""
 linearità A + BX
     
@@ -48,12 +51,11 @@ df: {self.df}
     
 """
 
-
 class Interpolazione:
-    def __init__(self,X: ndarray[float64], Y: ndarray[float64],f,p0 = None, sigmaY_strumento: ndarray[float64] | float64 = 0, names: list[str] = None) -> None:
+    def __init__(self,X: ndarray[float128], Y: ndarray[float128],f,p0 = None, sigmaY_strumento: ndarray[float128] | float128 = 0, names: list[str] = None) -> None:
         self.f = f
-        self.Y = Y
-        self.X = X
+        self.Y = Y.astype('float128')
+        self.X = X.astype('float128')
         self.N = len(X)
 
         self.bval, self.cov_matrix = curve_fit(f,X,Y,p0=p0)
@@ -72,13 +74,16 @@ class Interpolazione:
             self.sigma_bval = {x : y for x,y in zip(names,self.sigma_bval)}
 
     def __sigmaY(self):
-        return np.sqrt(np.sum( (self.Y - self.f(X,*self.bval))**2 ) / (self.N - len(self.bval)))
+        return np.sqrt(np.sum( (self.Y - self.f(self.X,*self.bval))**2 ) / (self.N - len(self.bval)))
 
     def __rchisquare(self):
         exp_val = self.f(self.X,*self.bval)
         return np.round(np.sum((self.Y - exp_val)**2 / exp_val) / self.df, 2)
 
     def __repr__(self) -> str:
+        return str(self)
+
+    def __str__(self) -> str:
         return f"""   
 Parameters: {self.bval} 
 Sigma parameters: {self.sigma_bval}
@@ -89,7 +94,6 @@ df: {self.df}
 
 covariance matrix: {self.cov_matrix}    
 """
-
 
 def final_val(x,sigma,decimals = 2,exp = 0, udm: str = '') -> str:
     x = np.round(x*np.power(10,-exp),decimals)
