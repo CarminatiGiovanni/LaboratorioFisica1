@@ -72,6 +72,11 @@ df: {self.df}
     
 """
 
+def decimal_val(x,decimals = 2, exp=0, udm: str = '') -> str:
+    x = np.round(x*np.power(10,-exp),decimals)
+    return f'{x} {udm}' if exp == 0 else f'{x}e{exp} {udm}'
+
+
 def final_val(x,sigma,decimals = 2,exp = 0, udm: str = '') -> str:
     x = np.round(x*np.power(10,-exp),decimals)
     sigma = np.round(sigma*np.power(10,-exp),decimals)
