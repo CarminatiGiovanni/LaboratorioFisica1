@@ -54,8 +54,6 @@ class RettaInterpolata(Interpolazione):
         self.B = self.bval['B']
         self.sigmaA = self.sigma_bval['A']
         self.sigmaB = self.sigma_bval['B']
-    def __repr__(self) -> str:
-        return str(self)
 
     def __str__(self) -> str:
         return f"""
@@ -65,6 +63,26 @@ A: {self.A}
 B: {self.B}
 sigmaA: {self.sigmaA}
 sigmaB: {self.sigmaB}
+
+sigmaY: {self.sigmaY}
+chiquadro ridotto: {self.rchisquare}
+df: {self.df}
+    
+"""
+
+class RettaInterpolataB(Interpolazione):
+    def __init__(self, X: ndarray[float64], Y: ndarray[float64], sigmaY_strumento: ndarray[float64] | float64 = 0) -> None:
+        f = lambda x,B : B*x
+        super().__init__(X,Y,f,sigmaY_strumento = sigmaY_strumento,names = ['B'],p0 = [(Y[len(Y)-1] - Y[0]) / (X[len(X)-1] - X[0])])
+        self.B = self.bval['B']
+        self.sigmaB = self.sigma_bval['B']
+
+    def __str__(self) -> str:
+        return f"""
+linearità BX
+    
+B: {self.B}
+sigmaB {self.sigmaB}
 
 sigmaY: {self.sigmaY}
 chiquadro ridotto: {self.rchisquare}
