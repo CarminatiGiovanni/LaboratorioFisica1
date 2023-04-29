@@ -107,10 +107,11 @@ def probability_under_norm(mean,sigma,val):
     y = norm.pdf(x,loc = mean,scale = sigma)
     index_1,index_2 = 0,0
     i = 0
+    t = np.abs(mean-val)/sigma
     for v in x:
-        if v<mean-val:
+        if v<mean-t*sigma:
             index_1 = i
-        if v>mean+val:
+        if v>mean+t*sigma:
             index_2 = i
             break
         i+=1
@@ -120,7 +121,7 @@ def probability_under_norm(mean,sigma,val):
 
 if __name__ == '__main__':
 
-    print(probability_under_norm(0,1,0.5))
+    print(probability_under_norm(0.2474,0.0035,0.250))
 
     # val = 0.51543e-12
     # sigma_val = 1.543e-15
