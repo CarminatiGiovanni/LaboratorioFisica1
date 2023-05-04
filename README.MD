@@ -6,3 +6,5 @@ includere interpolazione3.py in sys.path oppure copiare il file e includerlo nel
 
 ### elimina
 sudo cp interpolazione3.py /usr/lib/python3.10
+
+# RICORDA DI SOSTITUIRE TUTTI I COULOMB
