@@ -14,7 +14,7 @@ class Interpolazione:
         self.sigma_bval = np.sqrt(np.diag(self.cov_matrix))
 
         self.sigmaY = np.sqrt(self.__sigmaY()**2 + sigmaY_strumento**2)
-        self.df = self.N / len(self.bval)
+        self.df = self.N - len(self.bval)
 
         self.rchisquare = self.__rchisquare()
 
