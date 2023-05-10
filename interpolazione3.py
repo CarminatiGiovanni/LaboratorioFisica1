@@ -30,7 +30,7 @@ class Interpolazione:
 
     def __rchisquare(self):
         exp_val = self.f(self.X,*self.bval)
-        return np.round(np.sum((self.Y - exp_val)**2 / exp_val) / self.df, 4)
+        return (np.sum((self.Y - exp_val)**2 / self.sigmaY) / self.df, 4)
 
     def __repr__(self) -> str:
         return str(self)
