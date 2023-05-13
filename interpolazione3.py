@@ -26,10 +26,10 @@ class Interpolazione:
             self.pvalue = np.round(sc.chi2.sf(self.rchisquare, self.df)*100,1)
         else:
             self.sigmaY = self.__sigmaY()
+
         if names != None: # assegna i nomi alle variabili
             self.bval = {x : y for x,y in zip(names,self.bval)}
             self.sigma_bval = {x : y for x,y in zip(names,self.sigma_bval)}
-
 
     def __sigmaY(self): # deviazione standard
         return np.sqrt(
