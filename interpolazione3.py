@@ -4,8 +4,25 @@ from scipy.optimize import curve_fit
 from scipy.stats import norm
 import scipy.stats as sc
 
+'''
+Classe per le interpolazioni (sfrutta sc.curve_fit)
+
+__init__:
+    X: valori sull'asse delle ascisse
+    Y: valori sull'asse delle ordinate
+    f: funzione per l'interpolazione
+    sigmaY_strumento: incertezza delle Y
+    p0: initial guess per i parametri di f
+    weights: pesi per minimi quadrati pesati
+
+NOTA: 
+    la classe stima il chiquadro e il pvalue solo se è dato un certo sigmaY_strumento,
+    altrimenti si limita a stimare a posteriori il sigmaY.
+    Se il parametro weights non è nullo il sigmaY viene calcolato con il metodo dei minimi quadrati pesati
+'''
+
 class Interpolazione:
-    def __init__(self,X: ndarray[float64], Y: ndarray[float64],f,sigmaY_strumento: ndarray[float64] | float64 = None,p0 = None, names: list[str] = None) -> None:
+    def __init__(self,X: ndarray[float64], Y: ndarray[float64],f,sigmaY_strumento: ndarray[float64] | float64 = None,p0 = None,weights: ndarray[float64] = None, names: list[str] = None) -> None:
         self.f = f
         self.Y = Y.astype('float64')
         self.X = X.astype('float64')
@@ -25,7 +42,11 @@ class Interpolazione:
             self.rchisquare = self.__rchisquare()
             self.pvalue = np.round(sc.chi2.sf(self.rchisquare, self.df)*100,1)
         else:
-            self.sigmaY = self.__sigmaY()
+            if weights is not None: # minimi quadrati pesati
+                self.w = weights
+                self.sigmaY = self.__w_sigmaY()
+            else:                   # minimi quadrati
+                self.sigmaY = self.__sigmaY()
 
         if names != None: # assegna i nomi alle variabili
             self.bval = {x : y for x,y in zip(names,self.bval)}
@@ -35,6 +56,12 @@ class Interpolazione:
         return np.sqrt(
             np.sum( (self.Y - self.f(self.X,*self.bval))**2 ) 
             / (self.N - len(self.bval)))
+    
+    def __w_sigmaY(self): # minimi quadrati pesati
+        return np.sqrt(
+            np.sum(self.w*((self.Y - self.f(self.X,*self.bval))**2)) /
+            ((np.sum(self.w)*(self.N-len(self.bval))) / self.N)
+        )
 
     def __rchisquare(self):
         exp_val = self.f(self.X,*self.bval)
@@ -61,9 +88,9 @@ covariance matrix: {self.cov_matrix}
         return s1 + s2 + s3
 
 class RettaInterpolata(Interpolazione):
-    def __init__(self,X,Y,sigmaY_strumento: ndarray[float64] | float64 = None):
+    def __init__(self,X,Y,sigmaY_strumento: ndarray[float64] | float64 = None,weights: ndarray[float64] = None):
         f = lambda x,A,B : A + B*x
-        super().__init__(X,Y,f,sigmaY_strumento = sigmaY_strumento,names = ['A','B'],p0 = [Y[0], (Y[len(Y)-1] - Y[0]) / (X[len(X)-1] - X[0])])
+        super().__init__(X,Y,f,sigmaY_strumento = sigmaY_strumento,names = ['A','B'],p0 = [Y[0], (Y[len(Y)-1] - Y[0]) / (X[len(X)-1] - X[0])],weights=weights)
         self.A = self.bval['A']
         self.B = self.bval['B']
         self.sigmaA = self.sigma_bval['A']
@@ -86,9 +113,9 @@ pvalue: {self.pvalue}%""" if hasattr(self,'rchisquare') else ''
         return s1 + s2
 
 class RettaInterpolataB(Interpolazione):
-    def __init__(self, X: ndarray[float64], Y: ndarray[float64], sigmaY_strumento: ndarray[float64] | float64 = None) -> None:
+    def __init__(self, X: ndarray[float64], Y: ndarray[float64], sigmaY_strumento: ndarray[float64] | float64 = None,weights: ndarray[float64] = None) -> None:
         f = lambda x,B : B*x
-        super().__init__(X,Y,f,sigmaY_strumento = sigmaY_strumento,names = ['B'],p0 = [(Y[len(Y)-1] - Y[0]) / (X[len(X)-1] - X[0])])
+        super().__init__(X,Y,f,sigmaY_strumento = sigmaY_strumento,names = ['B'],p0 = [(Y[len(Y)-1] - Y[0]) / (X[len(X)-1] - X[0])],weights=weights)
         self.B = self.bval['B']
         self.sigmaB = self.sigma_bval['B']
 
