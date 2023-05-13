@@ -143,6 +143,8 @@ def final_val(x,sigma,decimals = 2,exp = 0, udm: str = '') -> str:
     sigma = np.round(sigma*np.power(10,-exp),decimals)
     return f'{x} ± {sigma} {udm}' if exp == 0 else f'({x} ± {sigma})e{exp} {udm}'
 
+def b_std(x: ndarray): # deviazione standard con correzione di bessel
+    return np.sqrt(np.sum((x - np.mean(x))**2)/(len(x)-1))
 
 def probability_under_norm(mean,sigma,val):
     x = np.linspace(mean - 5*sigma,mean+5*sigma,1000)
