@@ -29,7 +29,7 @@ class Interpolazione:
         self.N = len(X)
 
         self.bval, self.cov_matrix = curve_fit(f,X,Y,p0=p0)
-        self.sigma_bval = np.sqrt(np.diag(self.cov_matrix)) * (self.N/(self.N-1)) # CORREZIONE DI BESSEL
+        self.sigma_bval = np.sqrt(np.diag(self.cov_matrix)) * (self.N/(self.N-len(self.bval))) # CORREZIONE DI BESSEL per interpolazioni
 
         self.x_best = np.linspace(min(X),max(X),100)
         self.y_best = f(self.x_best,*self.bval)
